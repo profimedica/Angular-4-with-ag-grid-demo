@@ -1,0 +1,69 @@
+<h1>Simple Ajuro using ag-Grid Angular Example</h1>
+<md-tab-group>
+    <md-tab label="DATA">
+      <span style='width: 235px; margin-top: 0px; vertical-align: top; display: inline-block'>
+        <button type="button" md-button (click)="GoBack()">Back</button>
+        <app-cards-list></app-cards-list>
+      </span>
+      <span style='width: 700px; margin-top: 0px; vertical-align: top'>
+        <ag-grid-angular style="width: 700px; height: 700px; margin-top: 0px; vertical-align: top"
+          class="ag-fresh"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          [gridOptions]="gridOptions"
+          (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+      </span>
+      <span style='width: 300px;'>
+        <form [formGroup]="TableCards" novalidate  style='width: 300px; display: inline-block'>
+            <div *ngFor="let itemz of TableCards.controls | keys">
+                <fieldset formGroupName={{itemz}}>
+                    <fieldset formGroupName="data">
+                        <div class="form-group">
+                          <div *ngFor="let fielde of TableCards.controls[itemz].controls['data'].controls | keys">
+                            <input type="text"
+                            class="form-control"
+                            [formControlName]="fielde"
+                            (mouseenter)="SelectTable(itemz)"
+                            >
+                            <!--[value]="itemz+'_'+fielde"-->
+                          </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+            </div>
+          <pre>{{TableCards.value | json}}</pre>
+        </form>
+      </span>
+    </md-tab>
+    <md-tab label="HTTP">
+    <div id="content">
+        <md-card>
+          <h1>HTTP</h1>
+          <h4>HTTP History</h4>
+          <button type="button" md-button (click)="CrearHistory()">Clear history</button>
+          <button type="button" md-button (click)="AddHistory()">Run Last Request</button>
+
+          <form [formGroup]="RequestsHistoryCards" novalidate>
+              <div *ngFor="let itemz of RequestsHistoryCards.controls | keys">
+                  <fieldset formGroupName={{itemz}}>
+                      <fieldset formGroupName="req">
+                          <div class="form-group">
+                            <div *ngFor="let fielde of RequestsHistoryCards.controls[itemz].controls['req'].controls | keys">
+                              <input type="text"
+                              class="form-control"
+                              [formControlName]="fielde"
+                              >
+                              <!--[value]="itemz+'_'+fielde"-->
+                            </div>
+                          </div>
+                      </fieldset>
+                  </fieldset>
+              </div>
+             <pre>{{RequestsHistoryCards.value | json}}</pre>
+          </form>
+
+         </md-card>
+      </div>
+    </md-tab>
+</md-tab-group>

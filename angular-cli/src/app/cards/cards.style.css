@@ -1,0 +1,15 @@
+.my_database_card {
+  background-color: #DDF;
+}
+.hidden_card {
+  display: none;
+}
+.object_tab_element {
+  border-top: 1px solid silver;
+  border-left: 1px solid silver;
+  border-right: 1px solid silver;
+  color: gray;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+}

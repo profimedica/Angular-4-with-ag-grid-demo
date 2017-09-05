@@ -1,0 +1,12 @@
+.app-content {
+  padding: 20px;
+}
+.app-content md-card{
+  margin: 20px;
+}
+
+.container {
+  z-index: 20;
+  display: inherit;
+  padding: 0;
+}
