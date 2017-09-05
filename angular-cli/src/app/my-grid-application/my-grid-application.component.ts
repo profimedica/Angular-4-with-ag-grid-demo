@@ -71,6 +71,11 @@ export class MyGridApplicationComponent implements OnInit {
           }*/];
     }
 
+    selectedNavItem(item: number) {
+      console.log('selected nav item ' + item);
+      // this.cardsService.changeNav(item);
+    }
+
     ArchiveResponse(data) {
       const newEntry = new FormGroup({
       });
@@ -187,7 +192,7 @@ export class MyGridApplicationComponent implements OnInit {
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
       const options = new RequestOptions({ headers: headers, params: params });
-      this.http.post('http://localhost:85/my/api/index.php',
+      this.http.post('http://localhost:86/mm/api/index.php',
       params)
       .subscribe(data => {
         this.ArchiveResponse(data);

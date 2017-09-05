@@ -1,6 +1,18 @@
+import {Injectable}      from '@angular/core'
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import { CardModel } from './cards.model';
 
+@Injectable()
 export class CardsService {
+  // Observable navItem source
+  private cardsSource = new BehaviorSubject<number>(0);
+  // Observable navItem stream
+  navItem = this.cardsSource.asObservable();
+  // service command
+  changeNav(number) {
+    this.cardsSource.next(number);
+  }
+
   private databases: CardModel[] = [];
 
   constructor(

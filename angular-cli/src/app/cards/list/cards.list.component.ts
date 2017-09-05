@@ -1,20 +1,20 @@
+import {Subscription} from 'rxjs/Subscription';
 import { CardModel } from './../cards.model';
 import { OnInit } from '@angular/core';
 import { CardsService } from '../cards.service';
 import { Component } from '@angular/core';
 
+
 @Component({
  selector: 'app-cards-list',
  styleUrls: ['../cards.style.css'],
- template: `
-    <div *ngFor="let itemz of cards">
-       <div class='my_database_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
-    </div>
- `,
+ templateUrl: './cards.list.template.html',
    providers: [CardsService]
 })
 
 export class CardsListComponent implements OnInit {
+  item: number;
+  subscription:Subscription;
   cards: CardModel[];
   selectedCard: CardModel;
 
@@ -22,6 +22,11 @@ export class CardsListComponent implements OnInit {
 
   ngOnInit() {
     this.cards = this.cardsService.getCards();
+    this.subscription = this.cardsService.navItem.subscribe(item => this.item = item)
+  }
+  ngOnDestroy() {
+    // prevent memory leak when component is destroyed
+    this.subscription.unsubscribe();
   }
 
   selectCard(card: CardModel) { this.selectedCard = card; }
