@@ -1,9 +1,25 @@
-.my_database_card {
-  background-color: #DDF;
-}
-.hidden_card {
-  display: none;
-}
+
+.my_column_card{ background-color: #BDF }
+.my_column_card:hover{ background-color: #BDC }
+
+.my_database_card{ background-color: #DDF }
+.my_database_card:hover{ background-color: #DDC }
+
+.my_table_card{ background-color: #FDF }
+.my_table_card:hover{ background-color: #FDC }
+
+.my_view_card{ background-color: #FFC }
+.my_view_card:hover{ background-color: #FFE }
+
+.my_procedure_card{ background-color: #8FF }
+.my_procedure_card:hover{ background-color: #BFC }
+
+.my_function_card{ background-color: #5FF }
+.my_function_card:hover{ background-color: #5FC }
+
+.my_key_card{ background-color: #FFD }
+.my_key_card:hover{ background-color: #FFA }
+
 .object_tab_element {
   border-top: 1px solid silver;
   border-left: 1px solid silver;

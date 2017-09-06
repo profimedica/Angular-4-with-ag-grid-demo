@@ -117,8 +117,9 @@ export class MyGridApplicationComponent implements OnInit {
         this.TableCards.removeControl(key);
       });
     };
-    AddTableCards(data) {
+    AddCards(data) {
       for (let i = 0; i < data.data.length; i++ ) {
+        /*
         const newEntry = new FormGroup({
         });
         this.TableCards.addControl(
@@ -129,57 +130,148 @@ export class MyGridApplicationComponent implements OnInit {
             name: new FormControl()
           })
         );
+        (<FormControl>(<FormGroup>newEntry.controls['data']).controls['name']).setValue(data.data[i].Table);
+        */
         this.rowData = data.data;
         this.Tables = data;
-        this.cardsListComponentInstance.cardsService.updateTables(data.data);
-        this.cardsListComponentInstance.getRecentDetections();
+        console.log('Ansere succeded for ' + data.data.length + ' ' + data.post.list + ' cards');
+        switch(data.post.list)
+        {
+          case 'columns':
+            this.cardsListComponentInstance.cardsService.updateColumns(data.data);
+            this.cardsListComponentInstance.UpdateColumnCards();
+            break;
+          case 'connections':
+            this.cardsListComponentInstance.cardsService.updateDatabases(data.data);
+            this.cardsListComponentInstance.UpdateDatabaseCards();
+            break;
+          case 'functions':
+            this.cardsListComponentInstance.cardsService.updateFunctions(data.data);
+            this.cardsListComponentInstance.UpdateFunctionCards();
+            break;
+          case 'keys':
+            this.cardsListComponentInstance.cardsService.updateKeys(data.data);
+            this.cardsListComponentInstance.UpdateKeyCards();
+            break;
+          case 'procedures':
+            this.cardsListComponentInstance.cardsService.updateProcedures(data.data);
+            this.cardsListComponentInstance.UpdateProcedureCards();
+            break;
+          case 'tables':
+            this.cardsListComponentInstance.cardsService.updateTables(data.data);
+            this.cardsListComponentInstance.UpdateTableCards();
+            break;
+          case 'views':
+            this.cardsListComponentInstance.cardsService.updateViews(data.data);
+            this.cardsListComponentInstance.UpdateViewCards();
+            break;
+      }
         // CardsService.updateDatabases(data.data);
-        (<FormControl>(<FormGroup>newEntry.controls['data']).controls['name']).setValue(data.data[i].Table);
       }
     };
 
     AddHistory() {
-      this.PostRequest(this.State.Init);
+      this.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Database);
     }
     SelectTable (data) {
       const tableIndex = parseInt(data.substring(2), 10);
       MyGridApplicationComponent.that.SelectedSchema = MyGridApplicationComponent.that.Tables.data[tableIndex].Schema;
       MyGridApplicationComponent.that.SelectedTable = MyGridApplicationComponent.that.Tables.data[tableIndex].Table;
       MyGridApplicationComponent.that.CurrentState = MyGridApplicationComponent.that.State.Table;
-      MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.CurrentState);
+
+      MyGridApplicationComponent.that.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Table);
+      MyGridApplicationComponent.that.PostRequest(this.cardsListComponentInstance.cardsService.CardType.View);
+      MyGridApplicationComponent.that.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Procedure);
+      MyGridApplicationComponent.that.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Function);
+      MyGridApplicationComponent.that.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Key);
     }
     GoBack() {
       MyGridApplicationComponent.that.CurrentState -= 2;
       if (MyGridApplicationComponent.that.CurrentState === MyGridApplicationComponent.that.State.Database) {
         MyGridApplicationComponent.that.ClearCards();
       }
-      this.PostRequest(MyGridApplicationComponent.that.CurrentState);
+      this.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Database);
     }
 
-    PostRequest(state: number) {
+    PostRequest(CardType: number) {
       // Make the HTTP request:
       let params = {};
 
-      switch ( state ) {
-        case this.State.Init:
+      switch ( CardType ) {
+        case this.cardsListComponentInstance.cardsService.CardType.Column:
+        params = {
+          select: 'plain',
+          list: 'columns',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
+        break;
+        case this.cardsListComponentInstance.cardsService.CardType.Database:
           params = {
             select: 'plain',
             list: 'connections',
             fetch: 'objects'
           };
         break;
-        case this.State.Database:
-          params = {
-            select: 'plain',
-            list: 'tables',
-            database: 'chinook (SQLite)',
-            connection: this.SelectedConnection,
-            fetch: 'objects',
-            filter: '%',
-            startTime: '40839.925'
-          };
+        case this.cardsListComponentInstance.cardsService.CardType.Function:
+        params = {
+          select: 'plain',
+          list: 'functions',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
         break;
-        case this.State.Table:
+        case this.cardsListComponentInstance.cardsService.CardType.Key:
+        params = {
+          select: 'plain',
+          list: 'keys',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
+        break;
+        case this.cardsListComponentInstance.cardsService.CardType.Procedure:
+        params = {
+          select: 'plain',
+          list: 'procedures',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
+        break;
+        case this.cardsListComponentInstance.cardsService.CardType.Table:
+        params = {
+          select: 'plain',
+          list: 'tables',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
+        break;
+        case this.cardsListComponentInstance.cardsService.CardType.View:
+        params = {
+          select: 'plain',
+          list: 'views',
+          database: 'chinook (SQLite)',
+          connection: this.SelectedConnection,
+          fetch: 'objects',
+          filter: '%',
+          startTime: '40839.925'
+        };
+        break;
+        case this.cardsListComponentInstance.cardsService.CardType.Record:
           params = {
             select: 'plain',
             list: 'records',
@@ -191,19 +283,20 @@ export class MyGridApplicationComponent implements OnInit {
             startTime: '40839.925'
           };
         break;
-    }
+      }
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
       const options = new RequestOptions({ headers: headers, params: params });
-      this.http.post('http://localhost:85/my/api/index.php',
+      this.http.post('http://localhost:86/my/api/index.php',
       params)
       .subscribe(data => {
         this.ArchiveResponse(data);
         MyGridApplicationComponent.that.CurrentState++;
 
+      MyGridApplicationComponent.that.AddCards(data);
       switch ( MyGridApplicationComponent.that.CurrentState ) {
         case MyGridApplicationComponent.that.State.Table:
-          MyGridApplicationComponent.that.AddTableCards(data);
+          // MyGridApplicationComponent.that.AddCards(data);
           break;
       }
 
@@ -223,13 +316,17 @@ export class MyGridApplicationComponent implements OnInit {
     doSomething(row) {
       switch (MyGridApplicationComponent.that.CurrentState) {
         case MyGridApplicationComponent.that.State.Database:
-          MyGridApplicationComponent.that.SelectedConnection = row.data.Id - 1;
-          MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.CurrentState);
-          break;
+        MyGridApplicationComponent.that.SelectedConnection = row.data.Id - 1;
+        MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.Database);
+        break;
         case MyGridApplicationComponent.that.State.Table:
         MyGridApplicationComponent.that.SelectedSchema = row.data.Schema;
         MyGridApplicationComponent.that.SelectedTable = row.data.Table;
-          MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.CurrentState);
+        MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.Table);
+        MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.View);
+        MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.Procedure);
+        // MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.Function);
+        MyGridApplicationComponent.that.PostRequest(MyGridApplicationComponent.that.cardsListComponentInstance.cardsService.CardType.Key);
           break;
     }
     }
@@ -243,7 +340,7 @@ export class MyGridApplicationComponent implements OnInit {
       this.TableCards = new FormGroup({
         // Will hold all cards
       });
-        this.PostRequest(this.State.Init);
+        this.PostRequest(this.cardsListComponentInstance.cardsService.CardType.Database);
     }
 
     GetData() {
