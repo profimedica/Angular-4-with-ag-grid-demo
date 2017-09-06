@@ -1,24 +1,30 @@
-import { CardsService } from './../cards/cards.service';
+import { CardsService } from '../cards/cards.service';
+import { CardsModule } from './../cards/cards.module';
+// import { CardsListComponent } from './../CardsModule';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {RequestOptions, Headers} from '@angular/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {RedComponentComponent} from '../red-component/red-component.component';
 import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
          MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
 import {GridOptions} from 'ag-grid/main';
 import {HttpParams, HttpHeaders,  HttpClient} from '@angular/common/http';
+import { CardsListComponent } from '../cards/list/cards.list.component';
 
 @Component({
     selector: 'app-my-grid-application',
     templateUrl: './my-grid-application.component.html'
 })
 export class MyGridApplicationComponent implements OnInit {
+  @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent
+  // https://stackoverflow.com/questions/37100891/access-child-components-providers-in-angular2
 
     static that;
     static GenericPurposeIndex = 0;
     RequestsHistoryCards: FormGroup;
     TableCards: FormGroup;
+    cardsService: CardsService;
 
     State = {
       'Init': 0,
@@ -69,11 +75,6 @@ export class MyGridApplicationComponent implements OnInit {
               Hostname: 'l2',
               Port: '3306'
           }*/];
-    }
-
-    selectedNavItem(item: number) {
-      console.log('selected nav item ' + item);
-      // this.cardsService.changeNav(item);
     }
 
     ArchiveResponse(data) {
@@ -130,6 +131,8 @@ export class MyGridApplicationComponent implements OnInit {
         );
         this.rowData = data.data;
         this.Tables = data;
+        this.cardsListComponentInstance.cardsService.updateTables(data.data);
+        this.cardsListComponentInstance.getRecentDetections();
         // CardsService.updateDatabases(data.data);
         (<FormControl>(<FormGroup>newEntry.controls['data']).controls['name']).setValue(data.data[i].Table);
       }
@@ -192,15 +195,17 @@ export class MyGridApplicationComponent implements OnInit {
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
       const options = new RequestOptions({ headers: headers, params: params });
-      this.http.post('http://localhost:86/mm/api/index.php',
+      this.http.post('http://localhost:85/my/api/index.php',
       params)
       .subscribe(data => {
         this.ArchiveResponse(data);
         MyGridApplicationComponent.that.CurrentState++;
 
-        if (MyGridApplicationComponent.that.CurrentState === MyGridApplicationComponent.that.State.Table) {
+      switch ( MyGridApplicationComponent.that.CurrentState ) {
+        case MyGridApplicationComponent.that.State.Table:
           MyGridApplicationComponent.that.AddTableCards(data);
-        }
+          break;
+      }
 
         const columns = [];
         if (data['data'].length > 0) {
@@ -230,6 +235,7 @@ export class MyGridApplicationComponent implements OnInit {
     }
 
     ngOnInit() {
+      console.log(this.cardsListComponentInstance.cardsService); // you got the service
 
       this.RequestsHistoryCards = new FormGroup({
         // Will hold all cards

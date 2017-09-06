@@ -1,18 +1,9 @@
-import {Injectable}      from '@angular/core'
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+/*import { Observable } from 'rxjs/Rx';
+import { Injectable } from '@angular/core';*/
 import { CardModel } from './cards.model';
 
-@Injectable()
+/*@Injectable()*/
 export class CardsService {
-  // Observable navItem source
-  private cardsSource = new BehaviorSubject<number>(0);
-  // Observable navItem stream
-  navItem = this.cardsSource.asObservable();
-  // service command
-  changeNav(number) {
-    this.cardsSource.next(number);
-  }
-
   private databases: CardModel[] = [];
 
   constructor(
@@ -20,11 +11,16 @@ export class CardsService {
     // private logger: Logger
   ) { }
 
+  public updateTables(data: any) {
+    this.databases = data;
+  }
+
   public updateDatabases(data) {
     this.databases = [];
     for (let i = 0; i < data.length; i++ ) {
       this.databases.push(data[i]);
     }
+    console.log('Added ' + this.databases.length + ' cards');
   }
 
   getCards() {
@@ -38,6 +34,7 @@ export class CardsService {
       this.cards.push(card); // fill cache
     // });
     }*/
+    console.log('Found ' + this.databases.length + ' cards');
     return this.databases;
   }
 }

@@ -1,32 +1,43 @@
-import {Subscription} from 'rxjs/Subscription';
+import { Observable } from 'rxjs/observable';
 import { CardModel } from './../cards.model';
 import { OnInit } from '@angular/core';
 import { CardsService } from '../cards.service';
 import { Component } from '@angular/core';
 
-
 @Component({
  selector: 'app-cards-list',
  styleUrls: ['../cards.style.css'],
- templateUrl: './cards.list.template.html',
+ template: `
+    <div *ngFor="let itemz of cards">
+       <div class='my_database_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
+    </div>
+ `,
    providers: [CardsService]
 })
 
 export class CardsListComponent implements OnInit {
-  item: number;
-  subscription:Subscription;
-  cards: CardModel[];
+  cards: Array<CardModel>;
   selectedCard: CardModel;
 
-  constructor(private cardsService: CardsService) { }
+  constructor(public cardsService: CardsService) {
+    this.cards = new Array<CardModel>();
+   }
 
   ngOnInit() {
-    this.cards = this.cardsService.getCards();
-    this.subscription = this.cardsService.navItem.subscribe(item => this.item = item)
+    this.getRecentDetections();
+    /*const timer = Observable.timer(2000, 5000);
+    timer.subscribe(() => this.getRecentDetections());*/
+    // this.cards = this.cardsService.getCards();
   }
-  ngOnDestroy() {
-    // prevent memory leak when component is destroyed
-    this.subscription.unsubscribe();
+
+  public getRecentDetections(): void {
+    this.cards = this.cardsService.getCards();
+       /* .subscribe(recent => {
+             this.zone.run(() => { // <== added
+                 this.cards = recent;
+                 // console.log(this.cards[0].Name)
+             });
+    });*/
   }
 
   selectCard(card: CardModel) { this.selectedCard = card; }
