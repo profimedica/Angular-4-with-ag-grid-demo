@@ -1,15 +1,19 @@
 import { Observable } from 'rxjs/observable';
-import { CardModel } from './../cards.model';
+import { CardModel } from './../ajuro.cards.model';
 import { OnInit } from '@angular/core';
-import { CardsService } from '../cards.service';
+import { CardsService } from '../ajuro.cards.service';
 import { Component } from '@angular/core';
 
 @Component({
  selector: 'app-cards-list',
- styleUrls: ['../cards.style.css'],
+ styleUrls: ['../ajuro.cards.style.css'],
  template: `
   <div *ngFor="let itemz of allDatabaseCards">
-    <div class='my_database_card object_tab_element'><span>{{itemz['Driver']}}</span>.<span>{{itemz['Name']}}</span></div>
+    <div class='my_database_card object_tab_element'
+      (dblclick)="ColumnNavigate(itemz['Name'], itemz['Id'])">
+      <span>{{itemz['Driver']}}</span>.
+      <span>{{itemz['Name']}}</span>
+    </div>
   </div>
   <div *ngFor="let itemz of allTableCards">
     <div class='my_table_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
@@ -51,6 +55,10 @@ export class CardsListComponent implements OnInit {
     this.allProcedureCards = new Array<CardModel>();
     this.allTableCards = new Array<CardModel>();
     this.allViewCards = new Array<CardModel>();
+   }
+
+   ColumnNavigate(name, index) {
+    console.log('DblClicked: ' + name + index);
    }
 
   ngOnInit() {

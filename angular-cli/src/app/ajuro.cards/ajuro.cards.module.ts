@@ -1,4 +1,4 @@
-import { CardsListComponent } from './list/cards.list.component';
+import { CardsListComponent } from './ajuro.list/ajuro.cards.list.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {AppComponent} from '../app.component';

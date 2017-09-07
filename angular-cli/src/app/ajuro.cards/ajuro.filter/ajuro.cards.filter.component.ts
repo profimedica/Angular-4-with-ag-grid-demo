@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
-import { CardModel } from '../cards.model';
-import { CardsService } from '../cards.service';
+import { CardModel } from '../ajuro.cards.model';
+import { CardsService } from '../ajuro.cards.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -17,7 +17,7 @@ export class CardsFilterComponent implements OnInit {
   constructor(private cardsService: CardsService) { }
 
   ngOnInit() {
-    this.cards = this.cardsService.getCards();
+    // this.cards = this.cardsService.getCards();
   }
 
   selectCard(card: CardModel) { this.selectedCard = card; }

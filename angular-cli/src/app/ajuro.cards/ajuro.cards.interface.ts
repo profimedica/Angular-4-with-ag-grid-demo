@@ -1,0 +1,4 @@
+interface CardsInterface {
+  setDatabaseCards();
+  filterCards();
+}

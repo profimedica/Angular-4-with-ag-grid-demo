@@ -1,4 +1,5 @@
-import { CardsListComponent } from './cards/list/cards.list.component';
+import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
+import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +18,7 @@ import {MyGridApplicationComponent} from './my-grid-application/my-grid-applicat
 import {RedComponentComponent} from './red-component/red-component.component';
 
 // Modules
-import { CardsModule } from './cards/cards.module';
+import { CardsModule } from './ajuro.cards/ajuro.cards.module';
 import { AjuroInterceptor } from './my.interceptor';
 
 import {VERSION, Pipe, PipeTransform} from '@angular/core';
@@ -31,6 +32,7 @@ export class KeysPipe implements PipeTransform {
 @NgModule({
     declarations: [
         AppComponent,
+        DataPresenterComponent,
         CardsListComponent,
         KeysPipe,
         MyGridApplicationComponent,
