@@ -11,30 +11,51 @@ import { Component } from '@angular/core';
  styleUrls: ['../ajuro.cards.style.css'],
  template: `
  <app-data-provider></app-data-provider>
-  <div *ngFor="let itemz of allDatabaseCards">
+  <div *ngFor="let itemz of allDatabaseCards; let i = index">
     <div class='my_database_card object_tab_element'
-      (dblclick)="ColumnNavigate(itemz['Name'], itemz['Id'])">
+      id="{{i}}"
+      (dblclick)="NavigateToDatabase(i)">
       <span>{{itemz['Driver']}}</span>.
       <span>{{itemz['Name']}}</span>
     </div>
   </div>
-  <div *ngFor="let itemz of allTableCards">
-    <div class='my_table_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
+  <div *ngFor="let itemz of allTableCards; let i = index">
+    <div class='my_table_card object_tab_element'
+    (dblclick)="NavigateToTable(i)">
+    <span>{{itemz['Schema']}}</span>.
+    <span>{{itemz['Table']}}</span></div>
   </div>
-  <div *ngFor="let itemz of allViewCards">
-    <div class='my_view_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
+  <div *ngFor="let itemz of allViewCards; let i = index">
+    <div class='my_view_card object_tab_element'
+    (dblclick)="NavigateToView(i)">
+    <span>{{itemz['Schema']}}</span>.
+    <span>{{itemz['Table']}}</span></div>
   </div>
-  <div *ngFor="let itemz of allColumnCards">
-    <div class='my_column_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
+  <div *ngFor="let itemz of allColumnCards; let i = index">
+    <div class='my_column_card object_tab_element'
+    (dblclick)="NavigateToColumn(i)">
+    <span>{{itemz['Schema']}}</span>.
+    <span>{{itemz['Table']}}</span></div>
   </div>
-  <div *ngFor="let itemz of allProcedureCards">
-    <div class='my_procedure_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Name']}}</span></div>
+  <div *ngFor="let itemz of allProcedureCards; let i = index">
+    <div class='my_procedure_card object_tab_element'
+    (dblclick)="NavigateToProcedure(i)">
+    <span>{{itemz['Schema']}}</span>.
+    <span>{{itemz['Name']}}</span></div>
   </div>
-  <div *ngFor="let itemz of allFunctionCards">
-    <div class='my_function_card object_tab_element'><span>{{itemz['Schema']}}</span>.<span>{{itemz['Table']}}</span></div>
+  <div *ngFor="let itemz of allFunctionCards; let i = index">
+    <div class='my_function_card object_tab_element'
+    (dblclick)="NavigateToFunction(i)">
+    <span>{{itemz['Schema']}}</span>.
+    <span>{{itemz['Table']}}</span></div>
   </div>
-  <div *ngFor="let itemz of allKeyCards">
-    <div class='my_key_card object_tab_element'><span>{{itemz['ParentTable']}}</span>.<span>{{itemz['ParentColumn']}}</span> <span>{{itemz['ChildTable']}}</span>.<span>{{itemz['ChildColumn']}}</span></div>
+  <div *ngFor="let itemz of allKeyCards; let i = index">
+    <div class='my_key_card object_tab_element'
+    (dblclick)="NavigateToKey(i)">
+    <span>{{itemz['ParentTable']}}</span>.
+    <span>{{itemz['ParentColumn']}}</span> 
+    <span>{{itemz['ChildTable']}}</span>.
+    <span>{{itemz['ChildColumn']}}</span></div>
   </div>
 `,
    providers: [DataService]
@@ -54,8 +75,7 @@ export class CardsListComponent implements OnInit {
   selectedCard: CardModel;
 
   constructor(public dataService: DataService) {
-    CardsListComponent.that = this;
-
+    CardsListComponent.that = this; 
     this.allColumnCards = new Array<CardModel>();
     this.allDatabaseCards = new Array<CardModel>();
     this.allFunctionCards = new Array<CardModel>();
@@ -75,9 +95,33 @@ export class CardsListComponent implements OnInit {
     });
    }
 
-   ColumnNavigate(database, id) {
+   NavigateToColumn(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.View, {'Database': database, 'Id': id});
+      .PostRequest(DataService.CardType.Column, id);
+   }
+   NavigateToDatabase(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Table, id);
+   }
+   NavigateToFunction(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Function, id);
+   }
+   NavigateToKey(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Key, id);
+   }
+   NavigateToProcedure(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Procedure, id);
+   }
+   NavigateToTable(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Record, id);
+   }
+   NavigateToView(id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.View, id);
    }
 
   ngOnInit() {

@@ -50,7 +50,8 @@ export class DataService {
         cardType !== DataService.CardType.View &&
         cardType !== DataService.CardType.Function &&
         cardType !== DataService.CardType.Key &&
-        cardType !== DataService.CardType.Procedure) {
+        cardType !== DataService.CardType.Procedure
+      ) {
           allCards[0] = data;
         }
     allCards[cardType] = data;
@@ -109,6 +110,9 @@ export class DataService {
         break;
       case "views":
         this.setCards(DataService.CardType.View, data.data);
+        break;
+      case "records":
+        this.setCards(DataService.CardType.Record, data.data);
         break;
     }
   }
@@ -230,8 +234,8 @@ export class DataService {
 
     const headers = new Headers({ "Content-Type": "application/json" });
     const options = new RequestOptions({ headers: headers, params: params });
-    this.http.post("http://localhost:86/my/api/index.php", params).subscribe(
-      data   => { // {'data':[], post:{}}
+    this.http.post("http://10.101.4.98:86/mm/api/index.php", params).subscribe(
+      data   => { 
         if (data != null) {
           this.updateCards(data);
           console.log(data + ' results!');
