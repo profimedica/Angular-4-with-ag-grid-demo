@@ -1,13 +1,14 @@
 <h1></h1>
 <md-tab-group>
     <md-tab label="DATA">
-      <span style='width: 235px; margin-top: 0px; vertical-align: top; display: inline-block'>
-        <button type="button" md-button (click)="GoBack()">Back</button>
+      <div><input id='cards_filter' style='width: 229px'></div>
+      <div class='objects_tab'>
+        <!--button type="button" md-button (click)="GoBack()">Back</button-->
         <app-cards-list></app-cards-list>
         <app-data-provider></app-data-provider>
-      </span>
-      <span style='width: 700px; margin-top: 0px; vertical-align: top'>
-        <ag-grid-angular style="width: 700px; height: 700px; margin-top: 0px; vertical-align: top"
+      </div>
+      <span style='width: 1640px; margin-top: 0px; vertical-align: top; float:right'>
+        <ag-grid-angular style="width: 1500px; height: 800px; margin-top: 0px; vertical-align: top"
           class="ag-fresh"
           [rowData]="rowData"
           [columnDefs]="columnDefs"
@@ -17,7 +18,7 @@
       </span>
       <span style='width: 300px;'>
         <form [formGroup]="TableCards" novalidate  style='width: 300px; display: inline-block'>
-            <div *ngFor="let itemz of TableCards.controls | keys">
+            <div *ngFor="let itemz of TableCards.controls | keys:'sco'">
                 <fieldset formGroupName={{itemz}}>
                     <fieldset formGroupName="data">
                         <div class="form-group">

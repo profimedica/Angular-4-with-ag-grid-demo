@@ -17,3 +17,14 @@ justify-content: center;
 .sidenav {
 padding: 25px;
 }
+
+.objects_tab {
+  position: fixed;
+  left: 0px;
+  height: 100%;
+  width: 250px;
+  max-width: 250px;
+  background-color: white;
+  overflow: scroll;
+  overflow-x: hidden;
+}

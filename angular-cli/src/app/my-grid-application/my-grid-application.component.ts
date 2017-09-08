@@ -14,7 +14,8 @@ import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.c
 
 @Component({
     selector: 'app-my-grid-application',
-    templateUrl: './my-grid-application.component.html'
+    templateUrl: './my-grid-application.component.html',
+    styleUrls: ['./my-grid-application.component.css']
 })
 export class MyGridApplicationComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
