@@ -1,3 +1,4 @@
+import { DataService } from './ajuro.data/ajuro.data.service';
 import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
 import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import {NgModule} from '@angular/core';
@@ -57,7 +58,7 @@ export class KeysPipe implements PipeTransform {
       provide: HTTP_INTERCEPTORS,
       useClass: AjuroInterceptor,
       multi: true
-    }],
+    }, DataService ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

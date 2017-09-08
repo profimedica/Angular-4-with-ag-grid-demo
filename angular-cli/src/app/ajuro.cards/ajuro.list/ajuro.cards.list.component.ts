@@ -1,6 +1,8 @@
+import { DataService } from './../../ajuro.data/ajuro.data.service';
+import { DataPresenterComponent } from './../../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { Observable } from 'rxjs/observable';
 import { CardModel } from './../ajuro.cards.model';
-import { OnInit } from '@angular/core';
+import { OnInit, ViewChild } from '@angular/core';
 import { CardsService } from '../ajuro.cards.service';
 import { Component } from '@angular/core';
 
@@ -8,6 +10,7 @@ import { Component } from '@angular/core';
  selector: 'app-cards-list',
  styleUrls: ['../ajuro.cards.style.css'],
  template: `
+ <app-data-provider></app-data-provider>
   <div *ngFor="let itemz of allDatabaseCards">
     <div class='my_database_card object_tab_element'
       (dblclick)="ColumnNavigate(itemz['Name'], itemz['Id'])">
@@ -34,10 +37,13 @@ import { Component } from '@angular/core';
     <div class='my_key_card object_tab_element'><span>{{itemz['ParentTable']}}</span>.<span>{{itemz['ParentColumn']}}</span> <span>{{itemz['ChildTable']}}</span>.<span>{{itemz['ChildColumn']}}</span></div>
   </div>
 `,
-   providers: [CardsService]
+   providers: [DataService]
 })
 
 export class CardsListComponent implements OnInit {
+  static that: CardsListComponent;
+  @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
+
   allColumnCards: Array<CardModel>;
   allDatabaseCards: Array<CardModel>;
   allFunctionCards: Array<CardModel>;
@@ -47,7 +53,9 @@ export class CardsListComponent implements OnInit {
   allViewCards: Array<CardModel>;
   selectedCard: CardModel;
 
-  constructor(public cardsService: CardsService) {
+  constructor(public dataService: DataService) {
+    CardsListComponent.that = this;
+
     this.allColumnCards = new Array<CardModel>();
     this.allDatabaseCards = new Array<CardModel>();
     this.allFunctionCards = new Array<CardModel>();
@@ -55,97 +63,30 @@ export class CardsListComponent implements OnInit {
     this.allProcedureCards = new Array<CardModel>();
     this.allTableCards = new Array<CardModel>();
     this.allViewCards = new Array<CardModel>();
+
+    DataService.allCards.subscribe((allCards) => {
+      this.allColumnCards = allCards[DataService.CardType.Column];
+      this.allDatabaseCards = allCards[DataService.CardType.Database];
+      this.allFunctionCards = allCards[DataService.CardType.Function];
+      this.allKeyCards = allCards[DataService.CardType.Key];
+      this.allProcedureCards = allCards[DataService.CardType.Procedure];
+      this.allTableCards = allCards[DataService.CardType.Table];
+      this.allViewCards = allCards[DataService.CardType.View];
+    });
    }
 
-   ColumnNavigate(name, index) {
-    console.log('DblClicked: ' + name + index);
+   ColumnNavigate(database, id) {
+    CardsListComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.View, {'Database': database, 'Id': id});
    }
 
   ngOnInit() {
-    this.allColumnCards = this.cardsService.getCards(this.cardsService.CardType.Column);
-    this.allDatabaseCards = this.cardsService.getCards(this.cardsService.CardType.Database);
-    this.allFunctionCards = this.cardsService.getCards(this.cardsService.CardType.Function);
-    this.allKeyCards = this.cardsService.getCards(this.cardsService.CardType.Key);
-    this.allProcedureCards = this.cardsService.getCards(this.cardsService.CardType.Procedure);
-    this.allTableCards = this.cardsService.getCards(this.cardsService.CardType.Table);
-    this.allViewCards = this.cardsService.getCards(this.cardsService.CardType.View);
-    /*
-    this.getRecentDetections();
-    const timer = Observable.timer(2000, 5000);
-    timer.subscribe(() => this.getRecentDetections());
-    // this.cards = this.cardsService.getCards();
-    */
-  }
-
-  public UpdateColumnCards(): void {
-    this.allColumnCards = this.cardsService.getCards(this.cardsService.CardType.Column);
-    console.log('Found ' + this.allColumnCards.length + ' columns.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateDatabaseCards(): void {
-    this.allDatabaseCards = this.cardsService.getCards(this.cardsService.CardType.Database);
-    console.log('Found ' + this.allDatabaseCards.length + ' databases.')
-       /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateFunctionCards(): void {
-    this.allFunctionCards = this.cardsService.getCards(this.cardsService.CardType.Function);
-    console.log('Found ' + this.allFunctionCards.length + ' functions.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateKeyCards(): void {
-    this.allKeyCards = this.cardsService.getCards(this.cardsService.CardType.Key);
-    console.log('Found ' + this.allKeyCards.length + ' keys.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateProcedureCards(): void {
-    this.allProcedureCards = this.cardsService.getCards(this.cardsService.CardType.Procedure);
-    console.log('Found ' + this.allProcedureCards.length + ' procedures.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateTableCards(): void {
-    this.allTableCards = this.cardsService.getCards(this.cardsService.CardType.Table);
-    console.log('Found ' + this.allTableCards.length + ' tables.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
-  }
-  public UpdateViewCards(): void {
-    this.allViewCards = this.cardsService.getCards(this.cardsService.CardType.View);
-    console.log('Found ' + this.allViewCards.length + ' views.')
-    /* .subscribe(recent => {
-             this.zone.run(() => { // <== added
-                 this.cards = recent;
-                 // console.log(this.cards[0].Name)
-             });
-    });*/
+    this.allDatabaseCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Database];
+    this.allFunctionCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Function];
+    this.allKeyCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Key];
+    this.allProcedureCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Procedure];
+    this.allTableCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Table];
+    this.allViewCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.View];
   }
 
   selectCard(card: CardModel) { this.selectedCard = card; }

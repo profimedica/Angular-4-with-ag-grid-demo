@@ -13,7 +13,6 @@ import { DataService } from '../ajuro.data.service';
 })
 
 export class DataPresenterComponent implements OnInit {
-
   constructor(public dataService: DataService) {
   }
   ngOnInit() {

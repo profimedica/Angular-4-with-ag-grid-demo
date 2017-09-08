@@ -22,7 +22,4 @@ export class CardsService {
 
   constructor() { }
 
-  getCards(cardType) {
-    // return this.dataService.allCards[cardType];
-  }
 }
