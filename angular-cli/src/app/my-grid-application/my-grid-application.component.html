@@ -1,7 +1,7 @@
 <h1></h1>
 <md-tab-group>
     <md-tab label="DATA">
-      <div><input id='cards_filter' style='width: 229px'></div>
+      <app-cards-filter></app-cards-filter>
       <div class='objects_tab'>
         <!--button type="button" md-button (click)="GoBack()">Back</button-->
         <app-cards-list></app-cards-list>
@@ -18,11 +18,11 @@
       </span>
       <span style='width: 300px;'>
         <form [formGroup]="TableCards" novalidate  style='width: 300px; display: inline-block'>
-            <div *ngFor="let itemz of TableCards.controls | keys:'sco'">
+            <div *ngFor="let itemz of TableCards.controls | properties | where : {'use':FilterValue}">
                 <fieldset formGroupName={{itemz}}>
                     <fieldset formGroupName="data">
                         <div class="form-group">
-                          <div *ngFor="let fielde of TableCards.controls[itemz].controls['data'].controls | keys">
+                          <div *ngFor="let fielde of TableCards.controls[itemz].controls['data'].controls | properties">
                             <input type="text"
                             class="form-control"
                             [formControlName]="fielde"
@@ -47,11 +47,11 @@
           <button type="button" md-button (click)="AddHistory()">Run Last Request</button>
 
           <form [formGroup]="RequestsHistoryCards" novalidate>
-              <div *ngFor="let itemz of RequestsHistoryCards.controls | keys">
+              <div *ngFor="let itemz of RequestsHistoryCards.controls | properties">
                   <fieldset formGroupName={{itemz}}>
                       <fieldset formGroupName="req">
                           <div class="form-group">
-                            <div *ngFor="let fielde of RequestsHistoryCards.controls[itemz].controls['req'].controls | keys">
+                            <div *ngFor="let fielde of RequestsHistoryCards.controls[itemz].controls['req'].controls | properties">
                               <input type="text"
                               class="form-control"
                               [formControlName]="fielde"

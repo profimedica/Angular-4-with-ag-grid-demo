@@ -1,3 +1,6 @@
+import { CardsFilterComponent } from './ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { PropertiesPipe } from './ajuro.pipes/properties.pipe';
+import { WherePipe } from './ajuro.pipes/where.pipe';
 import { DataService } from './ajuro.data/ajuro.data.service';
 import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
 import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
@@ -11,7 +14,7 @@ import { MdButtonModule, MdCheckboxModule, MdInputModule,
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { PipesModule } from './pipes/pipes.module';
+import { PipesModule } from './ajuro.pipes/pipes.module';
 
 import {AgGridModule} from 'ag-grid-angular/main';
 import {AppComponent} from './app.component';
@@ -22,22 +25,17 @@ import {RedComponentComponent} from './red-component/red-component.component';
 import { CardsModule } from './ajuro.cards/ajuro.cards.module';
 import { AjuroInterceptor } from './my.interceptor';
 
-import {VERSION, Pipe, PipeTransform} from '@angular/core';
-@Pipe({ name: 'keys',  pure: false })
-export class KeysPipe implements PipeTransform {
-    transform(value: any, args: any[] = null): any {
-        return Object.keys(value);
-    }
-}
 
 @NgModule({
     declarations: [
         AppComponent,
         DataPresenterComponent,
         CardsListComponent,
-        KeysPipe,
+        CardsFilterComponent,
         MyGridApplicationComponent,
-        RedComponentComponent
+        RedComponentComponent,
+        PropertiesPipe,
+        WherePipe
     ],
     imports: [
         HttpClientModule,

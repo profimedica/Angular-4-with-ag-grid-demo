@@ -1,20 +1,25 @@
+import { DataService } from './../../ajuro.data/ajuro.data.service';
 import { OnInit } from '@angular/core';
 import { CardModel } from '../ajuro.cards.model';
-import { CardsService } from '../ajuro.cards.service';
 import { Component } from '@angular/core';
 
 @Component({
  selector: 'app-cards-filter',
- template: `
-   <div><span>{{Schema}}</span><span>{{Table}}</span></div>
-   `
+ styleUrls: ['../ajuro.cards.style.css'],
+ templateUrl: './ajuro.cards.filter.html',
+ providers: [DataService]
 })
 
 export class CardsFilterComponent implements OnInit {
+  FilterValue: string;
   cards: CardModel[];
   selectedCard: CardModel;
 
-  constructor(private cardsService: CardsService) { }
+  constructor(private dataService: DataService) { }
+
+  filterChanged(event) {
+    DataService.cardsFilterValue.next(this.FilterValue);
+  }
 
   ngOnInit() {
     // this.cards = this.cardsService.getCards();

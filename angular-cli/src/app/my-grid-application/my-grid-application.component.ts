@@ -1,6 +1,8 @@
+import { CardsFilterComponent } from './../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { PipesModule } from './../ajuro.pipes/pipes.module';
 import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { DataService } from './../ajuro.data/ajuro.data.service';
-import { CardsService } from '../ajuro.cards/ajuro.cards.service';
+// import { CardsService } from '../ajuro.cards/ajuro.cards.service';
 import { CardsModule } from './../ajuro.cards/ajuro.cards.module';
 // import { CardsListComponent } from './../CardsModule';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -19,6 +21,7 @@ import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.c
 })
 export class MyGridApplicationComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
+  @ViewChild(CardsFilterComponent) public cardsFilterComponentInstance: CardsFilterComponent;
   @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
   // https://stackoverflow.com/questions/37100891/access-child-components-providers-in-angular2
 
@@ -45,21 +48,21 @@ export class MyGridApplicationComponent implements OnInit {
           onRowDoubleClicked: this.doSomething
         };
 
-        DataService.allCards.subscribe((allCards) => {
-          const columns = [];
-          if (typeof(allCards[0]) !== 'undefined') {
-            if (allCards[0].length > 0) {
-              Object.keys(allCards[0][0]).forEach(key => {
-                columns.push({headerName: key, field: key});
-              });
-            }
+      DataService.allCards.subscribe((allCards) => {
+        const columns = [];
+        if (typeof(allCards[0]) !== 'undefined') {
+          if (allCards[0].length > 0) {
+            Object.keys(allCards[0][0]).forEach(key => {
+              columns.push({headerName: key, field: key});
+            });
           }
+        }
 
-          MyGridApplicationComponent.that.columnDefs = columns;
-          MyGridApplicationComponent.that.CurrentState++;
+        MyGridApplicationComponent.that.columnDefs = columns;
+        MyGridApplicationComponent.that.CurrentState++;
 
-          this.rowData = allCards[0];
-        });
+        this.rowData = allCards[0];
+      });
     }
 
     ArchiveResponse(data) {

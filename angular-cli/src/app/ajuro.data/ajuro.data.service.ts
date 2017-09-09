@@ -1,5 +1,5 @@
 import { ValueCache } from 'ag-grid/dist/lib/valueService/valueCache';
-import { CardsService } from '../ajuro.cards/ajuro.cards.service';
+// import { CardsService } from '../ajuro.cards/ajuro.cards.service';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 // HTTP specific imports
@@ -23,6 +23,7 @@ export class DataService {
   };
 
   // Here all cards will be stored by type. The indexes are provided by CardType
+  public static cardsFilterValue = new BehaviorSubject('');
   public static allCards = new BehaviorSubject(new Array());
   public static inst = 0;
 
@@ -234,8 +235,8 @@ export class DataService {
 
     const headers = new Headers({ "Content-Type": "application/json" });
     const options = new RequestOptions({ headers: headers, params: params });
-    this.http.post("http://10.101.4.98:86/mm/api/index.php", params).subscribe(
-      data   => { 
+    this.http.post("http://localhost:86/my/api/index.php", params).subscribe(
+      data   => {
         if (data != null) {
           this.updateCards(data);
           console.log(data + ' results!');

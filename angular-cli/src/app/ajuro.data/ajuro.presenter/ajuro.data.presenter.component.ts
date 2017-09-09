@@ -5,11 +5,9 @@ import { DataService } from '../ajuro.data.service';
 
 @Component({
   selector: 'app-data-provider',
-  template: `
-   <div>
-   </div>
- `,
-    providers: [DataService]
+  templateUrl: './ajuro.data.presenter.component.html',
+  styleUrls: ['./ajuro.data.presenter.component.css'],
+  providers: [DataService]
 })
 
 export class DataPresenterComponent implements OnInit {
