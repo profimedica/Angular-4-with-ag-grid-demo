@@ -1,0 +1,10 @@
+<app-data-provider></app-data-provider>
+<div *ngFor="let itemz of allDatabaseCards | where : {'Name':FilterValue} ; let i = index">
+   <div class='my_database_card object_tab_element'
+     id="{{i}}"
+     (dblclick)="NavigateToDatabase(i)">
+     <input type="checkbox" checked="{{itemz['Pinned']}}" data-md-icheck (change)="ToggleDatabase(i)"/>
+     <span>{{itemz['Driver']}}</span>.
+     <span>{{itemz['Name']}}</span>
+   </div>
+ </div>
