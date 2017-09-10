@@ -20,7 +20,6 @@ export class CardsListComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
 
   allColumnCards: Array<CardModel>;
-  allDatabaseCards: Array<CardModel>;
   allFunctionCards: Array<CardModel>;
   allKeyCards: Array<CardModel>;
   allProcedureCards: Array<CardModel>;
@@ -31,7 +30,6 @@ export class CardsListComponent implements OnInit {
   constructor(public dataService: DataService) {
     CardsListComponent.that = this;
     this.allColumnCards = new Array<CardModel>();
-    this.allDatabaseCards = new Array<CardModel>();
     this.allFunctionCards = new Array<CardModel>();
     this.allKeyCards = new Array<CardModel>();
     this.allProcedureCards = new Array<CardModel>();
@@ -44,11 +42,12 @@ export class CardsListComponent implements OnInit {
 
     DataService.allCards.subscribe((allCards) => {
       this.allColumnCards = allCards[DataService.CardType.Column];
-      this.allDatabaseCards = allCards[DataService.CardType.Database];
       this.allFunctionCards = allCards[DataService.CardType.Function];
       this.allKeyCards = allCards[DataService.CardType.Key];
       this.allProcedureCards = allCards[DataService.CardType.Procedure];
-      this.allTableCards = allCards[DataService.CardType.Table];
+      if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
+        CardsListComponent.that.allTableCards = allCards[DataService.CardType.Table];
+      }
       this.allViewCards = allCards[DataService.CardType.View];
     });
    }
@@ -56,10 +55,6 @@ export class CardsListComponent implements OnInit {
    NavigateToColumn(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
       .PostRequest(DataService.CardType.Column, id);
-   }
-   NavigateToDatabase(id) {
-    CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Table, id);
    }
    NavigateToFunction(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
@@ -83,7 +78,6 @@ export class CardsListComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.allDatabaseCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Database];
     this.allFunctionCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Function];
     this.allKeyCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Key];
     this.allProcedureCards = this.dataPresenterComponentInstance.dataService.allCards[DataService.CardType.Procedure];

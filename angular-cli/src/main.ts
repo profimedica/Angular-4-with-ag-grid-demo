@@ -3,7 +3,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {LicenseManager} from 'ag-grid-enterprise/main';
 
 import {AppModule} from './app/app.module';
-import {CardsModule} from './app/ajuro.cards/ajuro.cards.module';
+import {AjuroCardsModule} from './app/ajuro.cards/ajuro.cards.module';
 import {environment} from './environments/environment';
 
 

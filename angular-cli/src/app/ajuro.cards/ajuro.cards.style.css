@@ -29,3 +29,13 @@
   padding-right: 5px;
   font-weight: bold;
 }
+
+.ajuro_circle {
+  display: inline-block;
+  background: black;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  margin: 2px;
+  background: radial-gradient(circle at 10px 10px, #5cabff, #000);
+}

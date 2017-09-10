@@ -9,11 +9,10 @@ import {
   pure: false
 })
 
-export class PropertiesPipe implements PipeTransform {
+export class PropertiesPipeComponent implements PipeTransform {
     transform(value: any, args: any[] = null): any {
-      // console.log(JSON.stringify(Object.keys(value)));
       if (Object.getOwnPropertyNames(value).length > 0) {
-        const r = 0;
+        const x  = 0;
       }
         return Object.keys(value);
     }

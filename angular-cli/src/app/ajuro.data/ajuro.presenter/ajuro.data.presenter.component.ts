@@ -5,8 +5,8 @@ import { DataService } from '../ajuro.data.service';
 
 @Component({
   selector: 'app-data-provider',
-  templateUrl: './ajuro.data.presenter.component.html',
-  styleUrls: ['./ajuro.data.presenter.component.css'],
+  templateUrl: './ajuro.data.presenter.html',
+  styleUrls: ['./ajuro.data.presenter.css'],
   providers: [DataService]
 })
 

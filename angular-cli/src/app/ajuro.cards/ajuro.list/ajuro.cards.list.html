@@ -1,43 +1,36 @@
 <app-data-provider></app-data-provider>
-<div *ngFor="let itemz of allDatabaseCards ; let i = index">
-   <div class='my_database_card object_tab_element'
-     id="{{i}}"
-     (dblclick)="NavigateToDatabase(i)">
-     <span>{{itemz['Driver']}}</span>.
-     <span>{{itemz['Name']}}</span>
-   </div>
- </div>
- <div *ngFor="let itemz of allTableCards | where : {'Table':FilterValue} ; let i = index">
+ <div *ngFor="let itemz of allTableCards | where : {'Table':FilterValue}; let i = index">
    <div class='my_table_card object_tab_element'
    (dblclick)="NavigateToTable(i)">
+   <span [innerHTML]="itemz['ajuro_meta'].sources | diff_to_color"></span>
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
- <div *ngFor="let itemz of allViewCards; let i = index">
+ <div *ngFor="let itemz of allViewCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_view_card object_tab_element'
    (dblclick)="NavigateToView(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
- <div *ngFor="let itemz of allColumnCards; let i = index">
+ <div *ngFor="let itemz of allColumnCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_column_card object_tab_element'
    (dblclick)="NavigateToColumn(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
- <div *ngFor="let itemz of allProcedureCards; let i = index">
+ <div *ngFor="let itemz of allProcedureCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_procedure_card object_tab_element'
    (dblclick)="NavigateToProcedure(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Name']}}</span></div>
  </div>
- <div *ngFor="let itemz of allFunctionCards; let i = index">
+ <div *ngFor="let itemz of allFunctionCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_function_card object_tab_element'
    (dblclick)="NavigateToFunction(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
- <div *ngFor="let itemz of allKeyCards; let i = index">
+ <div *ngFor="let itemz of allKeyCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_key_card object_tab_element'
    (dblclick)="NavigateToKey(i)">
    <span>{{itemz['ParentTable']}}</span>.

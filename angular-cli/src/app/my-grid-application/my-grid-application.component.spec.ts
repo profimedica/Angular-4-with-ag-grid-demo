@@ -1,9 +1,24 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { DiffToColorPipeComponent } from './../ajuro.pipes/diff_to_color.pipe';
+import { AjuroInterceptor } from './../my.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardsFilterComponent } from './../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { PipesModule } from './../ajuro.pipes/pipes.module';
+import { WherePipeComponent } from './../ajuro.pipes/where.pipe';
+import { PropertiesPipeComponent } from './../ajuro.pipes/properties.pipe';
+import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
+import { DataService } from './../ajuro.data/ajuro.data.service';
+import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.component';
 
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from '../app.component';
 import {MyGridApplicationComponent} from './my-grid-application.component';
 import {AgGridModule} from 'ag-grid-angular';
 import {RedComponentComponent} from '../red-component/red-component.component';
+import { MdButtonModule, MdCheckboxModule, MdInputModule,
+  MdNativeDateModule, MdSlideToggleModule,
+  MdTooltipModule, MdSidenavModule, MdTableModule,
+  MaterialModule } from '@angular/material';
 
 describe('MyGridApplicationComponent', () => {
     let component: MyGridApplicationComponent;
@@ -13,12 +28,24 @@ describe('MyGridApplicationComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 AgGridModule.withComponents(
-                    [RedComponentComponent]
-                )
+                    [RedComponentComponent ]
+                ), ReactiveFormsModule, FormsModule,
+                MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
+                MdTooltipModule, MdSidenavModule, MdTableModule, HttpClientModule
             ],
             declarations: [
-                AppComponent, MyGridApplicationComponent, RedComponentComponent
+                WherePipeComponent, // needed for testing
+                PropertiesPipeComponent, // needed for testing
+                AppComponent, MyGridApplicationComponent, RedComponentComponent,
+                CardsListComponent, // needed for testing
+                CardsFilterComponent, // needed for testing
+                DataPresenterComponent, // needed for testing
             ],
+            providers: [{
+              provide: HTTP_INTERCEPTORS,
+              useClass: AjuroInterceptor,
+              multi: true
+            }, DataService ],
         })
         .compileComponents();
     }));

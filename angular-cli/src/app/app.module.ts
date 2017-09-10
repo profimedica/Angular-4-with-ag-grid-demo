@@ -1,6 +1,5 @@
+import { CardsSourcesComponent } from './ajuro.cards/ajuro.sources/ajuro.cards.sources.component';
 import { CardsFilterComponent } from './ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
-import { PropertiesPipe } from './ajuro.pipes/properties.pipe';
-import { WherePipe } from './ajuro.pipes/where.pipe';
 import { DataService } from './ajuro.data/ajuro.data.service';
 import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
 import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
@@ -22,7 +21,7 @@ import {MyGridApplicationComponent} from './my-grid-application/my-grid-applicat
 import {RedComponentComponent} from './red-component/red-component.component';
 
 // Modules
-import { CardsModule } from './ajuro.cards/ajuro.cards.module';
+// import { AjuroCardsModule } from './ajuro.cards/ajuro.cards.module';
 import { AjuroInterceptor } from './my.interceptor';
 
 
@@ -30,12 +29,11 @@ import { AjuroInterceptor } from './my.interceptor';
     declarations: [
         AppComponent,
         DataPresenterComponent,
+        CardsSourcesComponent,
         CardsListComponent,
         CardsFilterComponent,
         MyGridApplicationComponent,
-        RedComponentComponent,
-        PropertiesPipe,
-        WherePipe
+        RedComponentComponent
     ],
     imports: [
         HttpClientModule,
@@ -45,9 +43,9 @@ import { AjuroInterceptor } from './my.interceptor';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         BrowserModule,
         PipesModule,
+        // AjuroCardsModule,
         AgGridModule.withComponents(
             [RedComponentComponent]
         )

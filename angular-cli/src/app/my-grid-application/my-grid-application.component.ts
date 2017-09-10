@@ -3,7 +3,7 @@ import { PipesModule } from './../ajuro.pipes/pipes.module';
 import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { DataService } from './../ajuro.data/ajuro.data.service';
 // import { CardsService } from '../ajuro.cards/ajuro.cards.service';
-import { CardsModule } from './../ajuro.cards/ajuro.cards.module';
+import { AjuroCardsModule } from './../ajuro.cards/ajuro.cards.module';
 // import { CardsListComponent } from './../CardsModule';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
