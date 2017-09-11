@@ -30,13 +30,7 @@ export class MyGridApplicationComponent implements OnInit {
     RequestsHistoryCards: FormGroup;
     TableCards: FormGroup;
 
-    State = {
-      'Init': 0,
-      'Database': 1,
-      'Table': 2,
-      'Records': 6
-    };
-    CurrentState = 0;
+    TypeOnDisplay = 0;
     Tables;
     gridOptions: GridOptions;
     columnDefs: any[];
@@ -47,6 +41,10 @@ export class MyGridApplicationComponent implements OnInit {
         this.gridOptions = <GridOptions>{
           onRowDoubleClicked: this.doSomething
         };
+
+      DataService.LastType.subscribe((LastType) => {
+        MyGridApplicationComponent.that.TypeOnDisplay = LastType;
+      });
 
       DataService.allCards.subscribe((allCards) => {
         const columns = [];
@@ -59,7 +57,6 @@ export class MyGridApplicationComponent implements OnInit {
         }
 
         MyGridApplicationComponent.that.columnDefs = columns;
-        MyGridApplicationComponent.that.CurrentState++;
 
         this.rowData = allCards[0];
       });
@@ -112,7 +109,6 @@ export class MyGridApplicationComponent implements OnInit {
       const tableIndex = parseInt(data.substring(2), 10);
       MyGridApplicationComponent.that.SelectedSchema = MyGridApplicationComponent.that.Tables.data[tableIndex].Schema;
       MyGridApplicationComponent.that.SelectedTable = MyGridApplicationComponent.that.Tables.data[tableIndex].Table;
-      MyGridApplicationComponent.that.CurrentState = MyGridApplicationComponent.that.State.Table;
 
       MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Table);
       MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.View);
@@ -121,10 +117,7 @@ export class MyGridApplicationComponent implements OnInit {
       MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Key);
     }
     GoBack() {
-      MyGridApplicationComponent.that.CurrentState -= 2;
-      if (MyGridApplicationComponent.that.CurrentState === MyGridApplicationComponent.that.State.Database) {
-        MyGridApplicationComponent.that.ClearCards();
-      }
+      // -- //
       MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
     }
 
@@ -136,12 +129,12 @@ export class MyGridApplicationComponent implements OnInit {
     }
 
     doSomething(row) {
-      switch (MyGridApplicationComponent.that.CurrentState) {
-        case MyGridApplicationComponent.that.State.Database:
+      switch (MyGridApplicationComponent.that.TypeOnDisplay) {
+        case -1:
         MyGridApplicationComponent.that.dataService
         .PostRequest(DataService.CardType.Database, row.rowIndex);
         break;
-        case MyGridApplicationComponent.that.State.Table:
+        case DataService.CardType.Database:
         MyGridApplicationComponent.that.SelectedSchema = row.data.Schema;
         MyGridApplicationComponent.that.SelectedTable = row.data.Table;
         MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService
@@ -153,7 +146,13 @@ export class MyGridApplicationComponent implements OnInit {
         MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.
         PostRequest(DataService.CardType.Key, row.rowIndex);
         break;
-        case MyGridApplicationComponent.that.State.Records:
+        case DataService.CardType.Column:
+        case DataService.CardType.Function:
+        case DataService.CardType.Key:
+        case DataService.CardType.Procedure:
+        case DataService.CardType.Key:
+        case DataService.CardType.View:
+        case DataService.CardType.Table:
         MyGridApplicationComponent.that.dataService.
         PostRequest(DataService.CardType.Record, row.rowIndex);
         break;

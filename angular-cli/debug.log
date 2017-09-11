@@ -1,0 +1,35 @@
+[0911/005827.663:ERROR:process_info.cc(632)] range at 0x93ca3c8e00000000, size 0x1ed fully unreadable
+[0911/005827.664:ERROR:process_info.cc(632)] range at 0x93ca3cae00000000, size 0x1ed fully unreadable
+[0911/005827.664:ERROR:process_info.cc(632)] range at 0x93ca3cb000000000, size 0x1ed fully unreadable
+[0911/005829.893:ERROR:file_io_win.cc(164)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-51262785\Crashpad\reports\828d835c-8086-458e-8007-86147bbe58b5.dmp: The system cannot find the path specified. (0x3)
+[0911/005829.893:ERROR:http_body_gzip.cc(119)] deflateEnd: data error (-3)
+[0911/005838.023:ERROR:process_info.cc(632)] range at 0x8a503c8e00000000, size 0x193 fully unreadable
+[0911/005838.023:ERROR:process_info.cc(632)] range at 0x8a503cae00000000, size 0x193 fully unreadable
+[0911/005838.023:ERROR:process_info.cc(632)] range at 0x8a503cb000000000, size 0x193 fully unreadable
+[0911/005839.257:ERROR:file_io_win.cc(164)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-51262785\Crashpad\reports\13f7415a-39a6-46ed-9b85-2deaf78dc0ea.dmp: The system cannot find the path specified. (0x3)
+[0911/005839.258:ERROR:http_body_gzip.cc(119)] deflateEnd: data error (-3)
+[0911/022322.264:ERROR:process_info.cc(632)] range at 0xbea93c8e00000000, size 0x142 fully unreadable
+[0911/022322.264:ERROR:process_info.cc(632)] range at 0xbea93cae00000000, size 0x142 fully unreadable
+[0911/022322.264:ERROR:process_info.cc(632)] range at 0xbea93cb000000000, size 0x142 fully unreadable
+[0911/030644.997:ERROR:process_info.cc(632)] range at 0xac213c8e00000000, size 0x16d fully unreadable
+[0911/030645.092:ERROR:process_info.cc(632)] range at 0xac213cae00000000, size 0x16d fully unreadable
+[0911/030645.093:ERROR:process_info.cc(632)] range at 0xac213cb000000000, size 0x16d fully unreadable
+[0911/030645.349:ERROR:file_io_win.cc(164)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-95667771\Crashpad\settings.dat: The system cannot find the path specified. (0x3)
+[0911/030645.349:ERROR:file_io_win.cc(173)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-95667771\Crashpad\reports\41701522-ad16-4c2e-886e-c9d0d24e1ec6.dmp: The system cannot find the path specified. (0x3)
+[0911/030645.349:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0911/034140.175:ERROR:process_info.cc(632)] range at 0xae263c8e00000000, size 0x180 fully unreadable
+[0911/034140.176:ERROR:process_info.cc(632)] range at 0xae263cae00000000, size 0x180 fully unreadable
+[0911/034140.176:ERROR:process_info.cc(632)] range at 0xae263cb000000000, size 0x180 fully unreadable
+[0911/034147.793:ERROR:process_info.cc(632)] range at 0xc1fa3c8e00000000, size 0x21f fully unreadable
+[0911/034147.794:ERROR:process_info.cc(632)] range at 0xc1fa3cae00000000, size 0x21f fully unreadable
+[0911/034147.794:ERROR:process_info.cc(632)] range at 0xc1fa3cb000000000, size 0x21f fully unreadable
+[0911/034148.606:ERROR:file_io_win.cc(164)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-39003250\Crashpad\reports\70e52613-c084-462a-ba0b-11d2e005ed6b.dmp: The system cannot find the path specified. (0x3)
+[0911/034148.606:ERROR:http_body_gzip.cc(119)] deflateEnd: data error (-3)
+[0911/034153.031:ERROR:process_info.cc(632)] range at 0xf6ea3c8e00000000, size 0x248 fully unreadable
+[0911/034153.031:ERROR:process_info.cc(632)] range at 0xf6ea3cae00000000, size 0x248 fully unreadable
+[0911/034153.031:ERROR:process_info.cc(632)] range at 0xf6ea3cb000000000, size 0x248 fully unreadable
+[0911/034153.788:ERROR:file_io_win.cc(164)] CreateFile C:\Users\PROFIM~1\AppData\Local\Temp\karma-39003250\Crashpad\reports\0eb86526-8455-4f49-a0b0-618d03f5eeba.dmp: The system cannot find the path specified. (0x3)
+[0911/034153.788:ERROR:http_body_gzip.cc(119)] deflateEnd: data error (-3)
+[0911/034509.948:ERROR:process_info.cc(632)] range at 0xd3873c8e00000000, size 0x189 fully unreadable
+[0911/034509.949:ERROR:process_info.cc(632)] range at 0xd3873cae00000000, size 0x189 fully unreadable
+[0911/034509.949:ERROR:process_info.cc(632)] range at 0xd3873cb000000000, size 0x189 fully unreadable

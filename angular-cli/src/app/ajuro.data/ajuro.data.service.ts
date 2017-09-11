@@ -25,6 +25,7 @@ export class DataService {
   // Here all cards will be stored by type. The indexes are provided by CardType
   public static cardsFilterValue = new BehaviorSubject('');
   public static allCards = new BehaviorSubject(new Array());
+  public static LastType = new BehaviorSubject(-1);
   public static inst = 0;
 
   // Connection inndex used to build backend data requests.
@@ -45,14 +46,15 @@ export class DataService {
     DataService.inst++;
 
     DataService.allCards.subscribe((allCards) => {
-      if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
+        if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
         console.log('Updated tables to: ' + allCards[DataService.CardType.Table].length);
       }
     });
   }
 
   // Setter for a given cards type
-  private setCards(cardType: number, data: any, source: number) {
+  public setCards(cardType: number, data: any, source: number) {
+    DataService.LastType.next(cardType);
     const allCards = DataService.allCards.getValue();
     if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
       console.log(cardType + ' source ' + source + ' Found: ' + allCards[DataService.CardType.Table].length);
@@ -82,6 +84,10 @@ export class DataService {
           }
           if (sameValues) {
             existentCard = allCards[cardType][i];
+            if (cardType === 0 && typeof(existentCard.ajuro_meta) === 'undefined')
+            {
+              existentCard.ajuro_meta = {'sources':[]};
+            }
             const sourceIndex = existentCard.ajuro_meta.sources.indexOf(source);
             if ( sourceIndex < 0 ) {
               existentCard.ajuro_meta.sources.push(source);
@@ -320,7 +326,7 @@ export class DataService {
               }
             },
             error => {
-              console.log(JSON.stringify(error.json()));
+              console.log(JSON.stringify(error));
             }
           );
     });

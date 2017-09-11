@@ -2,6 +2,7 @@ import { CardsSourcesComponent } from './ajuro.cards/ajuro.sources/ajuro.cards.s
 import { DataService } from './ajuro.data/ajuro.data.service';
 import { AjuroInterceptor } from './my.interceptor';
 import { PropertiesPipeComponent } from './ajuro.pipes/properties.pipe';
+import { DiffToColorPipeComponent } from './ajuro.pipes/diff_to_color.pipe';
 import { WherePipeComponent } from './ajuro.pipes/where.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -35,6 +36,7 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent,
                 PropertiesPipeComponent,
+                DiffToColorPipeComponent,
                 WherePipeComponent,
                 MyGridApplicationComponent, RedComponentComponent,
                 CardsSourcesComponent, // needed for testing

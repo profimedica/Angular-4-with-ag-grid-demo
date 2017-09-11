@@ -1,6 +1,7 @@
 <app-data-provider></app-data-provider>
  <div *ngFor="let itemz of allTableCards | where : {'Table':FilterValue}; let i = index">
    <div class='my_table_card object_tab_element'
+   (mouseenter)="NavigateToTable(i)"
    (dblclick)="NavigateToTable(i)">
    <span [innerHTML]="itemz['ajuro_meta'].sources | diff_to_color"></span>
    <span>{{itemz['Schema']}}</span>.
