@@ -1,25 +1,25 @@
-import { CardsFilterComponent } from './../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
-import { PipesModule } from './../ajuro.pipes/pipes.module';
-import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
-import { DataService } from './../ajuro.data/ajuro.data.service';
+import { CardsFilterComponent } from './../../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { PipesModule } from './../../ajuro.pipes/pipes.module';
+import { DataPresenterComponent } from './../../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
+import { DataService } from './../../ajuro.data/ajuro.data.service';
 // import { CardsService } from '../ajuro.cards/ajuro.cards.service';
-import { AjuroCardsModule } from './../ajuro.cards/ajuro.cards.module';
+import { AjuroCardsModule } from './../../ajuro.cards/ajuro.cards.module';
 // import { CardsListComponent } from './../CardsModule';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { RedComponentComponent } from '../red-component/red-component.component';
+import { RedComponentComponent } from '../../red-component/red-component.component';
 import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
          MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
 import { GridOptions } from 'ag-grid/main';
-import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.component';
+import { CardsListComponent } from '../../ajuro.cards/ajuro.list/ajuro.cards.list.component';
 
 @Component({
-    selector: 'app-my-grid-application',
-    templateUrl: './my-grid-application.component.html',
-    styleUrls: ['./my-grid-application.component.css']
+    selector: 'app-grid-area',
+    templateUrl: './ajuro.grid.area.html',
+    styleUrls: ['./ajuro.grid.area.component.css']
 })
-export class MyGridApplicationComponent implements OnInit {
+export class GridAreaComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
   @ViewChild(CardsFilterComponent) public cardsFilterComponentInstance: CardsFilterComponent;
   @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
@@ -37,28 +37,13 @@ export class MyGridApplicationComponent implements OnInit {
     rowData: any[];
 
     constructor(public dataService: DataService) {
-      MyGridApplicationComponent.that = this;
+      GridAreaComponent.that = this;
         this.gridOptions = <GridOptions>{
-          onRowDoubleClicked: this.doSomething,
-          defaultColDef: {
-            filter: 'text',
-            filterParams: {
-                newRowsAction: 'keep'
-            },
-            allowedAggFuncs: ['sum','min','max','bollocks']
-          },
-          enableColResize: true,
-          rowModelType: 'enterprise',
-          rowGroupPanelShow: 'always',
-          animateRows: true,
-          showToolPanel: true,
-          enableSorting: true,
-          suppressDragLeaveHidesColumns: true,
-          debug: true
+          onRowDoubleClicked: this.doSomething
         };
 
       DataService.LastType.subscribe((LastType) => {
-        MyGridApplicationComponent.that.TypeOnDisplay = LastType;
+        GridAreaComponent.that.TypeOnDisplay = LastType;
       });
 
       DataService.allCards.subscribe((allCards) => {
@@ -71,7 +56,7 @@ export class MyGridApplicationComponent implements OnInit {
           }
         }
 
-        MyGridApplicationComponent.that.columnDefs = columns;
+        GridAreaComponent.that.columnDefs = columns;
 
         this.rowData = allCards[0];
       });
@@ -81,9 +66,9 @@ export class MyGridApplicationComponent implements OnInit {
       const newEntry = new FormGroup({
       });
       this.RequestsHistoryCards.addControl(
-        'R' + MyGridApplicationComponent.GenericPurposeIndex, newEntry
+        'R' + GridAreaComponent.GenericPurposeIndex, newEntry
       );
-      MyGridApplicationComponent.GenericPurposeIndex++;
+      GridAreaComponent.GenericPurposeIndex++;
       newEntry.addControl(
         'req', new FormGroup({
           fetch: new FormControl(),
@@ -118,22 +103,22 @@ export class MyGridApplicationComponent implements OnInit {
     };
 
     AddHistory() {
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
     }
     SelectTable (data) {
       const tableIndex = parseInt(data.substring(2), 10);
-      MyGridApplicationComponent.that.SelectedSchema = MyGridApplicationComponent.that.Tables.data[tableIndex].Schema;
-      MyGridApplicationComponent.that.SelectedTable = MyGridApplicationComponent.that.Tables.data[tableIndex].Table;
+      GridAreaComponent.that.SelectedSchema = GridAreaComponent.that.Tables.data[tableIndex].Schema;
+      GridAreaComponent.that.SelectedTable = GridAreaComponent.that.Tables.data[tableIndex].Table;
 
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Table);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.View);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Procedure);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Function);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Key);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Table);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.View);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Procedure);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Function);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Key);
     }
     GoBack() {
       // -- //
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
     }
 
     UpdateTable() {
@@ -144,21 +129,21 @@ export class MyGridApplicationComponent implements OnInit {
     }
 
     doSomething(row) {
-      switch (MyGridApplicationComponent.that.TypeOnDisplay) {
+      switch (GridAreaComponent.that.TypeOnDisplay) {
         case -1:
-        MyGridApplicationComponent.that.dataService
+        GridAreaComponent.that.dataService
         .PostRequest(DataService.CardType.Database, row.rowIndex);
         break;
         case DataService.CardType.Database:
-        MyGridApplicationComponent.that.SelectedSchema = row.data.Schema;
-        MyGridApplicationComponent.that.SelectedTable = row.data.Table;
-        MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService
+        GridAreaComponent.that.SelectedSchema = row.data.Schema;
+        GridAreaComponent.that.SelectedTable = row.data.Table;
+        GridAreaComponent.that.dataPresenterComponentInstance.dataService
         .PostRequest(DataService.CardType.Table, row.rowIndex);
-        MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
         PostRequest(DataService.CardType.View, row.rowIndex);
-        MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
         PostRequest(DataService.CardType.Procedure, row.rowIndex);
-        MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
         PostRequest(DataService.CardType.Key, row.rowIndex);
         break;
         case DataService.CardType.Column:
@@ -168,7 +153,7 @@ export class MyGridApplicationComponent implements OnInit {
         case DataService.CardType.Key:
         case DataService.CardType.View:
         case DataService.CardType.Table:
-        MyGridApplicationComponent.that.dataService.
+        GridAreaComponent.that.dataService.
         PostRequest(DataService.CardType.Record, row.rowIndex);
         break;
       }
@@ -183,7 +168,7 @@ export class MyGridApplicationComponent implements OnInit {
       this.TableCards = new FormGroup({
         // Will hold all cards
       });
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
     }
 
     GetData() {

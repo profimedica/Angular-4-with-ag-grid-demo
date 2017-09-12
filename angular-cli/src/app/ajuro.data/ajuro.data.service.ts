@@ -24,6 +24,7 @@ export class DataService {
 
   // Here all cards will be stored by type. The indexes are provided by CardType
   public static cardsFilterValue = new BehaviorSubject('');
+  public static gridFilterValue = new BehaviorSubject('');
   public static allCards = new BehaviorSubject(new Array());
   public static LastType = new BehaviorSubject(-1);
   public static inst = 0;
