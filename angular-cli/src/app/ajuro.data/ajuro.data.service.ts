@@ -53,6 +53,43 @@ export class DataService {
   }
 
   // Setter for a given cards type
+  public injectRecords(cardType: number, data: any, source: number, cards: Array<{}>) {
+    const existentData = Object.assign([], cards); 
+    if (data.length > 0) {
+      const properties = Object.getOwnPropertyNames(data[0]);
+      for (let k = 0; k < data.length; k++) {
+        let existentCard = null;
+        for (let i = 0; i < existentData.length; i++) {
+          let sameValues = true;
+          for (let p = 0; p < properties.length; p++) {
+            if (properties[p] !== 'ajuro_meta' && properties[p] !== 'Database' && existentData[i][properties[p]] !== data[k][properties[p]]) {
+              sameValues = false;
+            }
+          }
+          if (sameValues) {
+            existentCard = existentData[i];
+            if (cardType === 0 && typeof(existentCard.ajuro_meta) === 'undefined')
+            {
+              existentCard.ajuro_meta = {'sources':[]};
+            }
+            const sourceIndex = existentCard.ajuro_meta.sources.indexOf(source);
+            if ( sourceIndex < 0 ) {
+              existentCard.ajuro_meta.sources.push(source);
+            }
+          }
+        }
+        if (existentCard === null) {
+          const item = data[k];
+          item['ajuro_meta'] = { sources : [source] };
+          existentData.splice(0, 0, data[k]);
+        }
+      }
+    }
+    return existentData; // Passed by reference
+  }
+
+
+  // Setter for a given cards type
   public setCards(cardType: number, data: any, source: number) {
     DataService.LastType.next(cardType);
     const allCards = DataService.allCards.getValue();
@@ -65,7 +102,7 @@ export class DataService {
         cardType !== DataService.CardType.Key &&
         cardType !== DataService.CardType.Procedure
       ) {
-          allCards[0] = data;
+          allCards[0] = this.injectRecords(cardType, data, source, allCards[0]);
         }
 
     if (data.length > 0) {
@@ -78,7 +115,7 @@ export class DataService {
         for (let i = 0; i < allCards[cardType].length; i++) {
           let sameValues = true;
           for (let p = 0; p < properties.length; p++) {
-            if (properties[p] !== 'ajuro_meta' && allCards[cardType][i][properties[p]] !== data[k][properties[p]]) {
+            if (properties[p] !== 'ajuro_meta' && properties[p] !== 'Database' && allCards[cardType][i][properties[p]] !== data[k][properties[p]]) {
               sameValues = false;
             }
           }
@@ -217,6 +254,10 @@ export class DataService {
     // Clear before repopulate...
     const existentCards = DataService.allCards.getValue();
     existentCards[CardType] = [];
+    if(CardType === DataService.CardType.Database || CardType === DataService.CardType.Table || CardType === DataService.CardType.Record )
+    {
+      existentCards[DataService.CardType.Record] = [];
+    }
     DataService.allCards.next(existentCards);
     if (typeof(DataService.allCards.getValue()[DataService.CardType.Table]) !== 'undefined') {
       console.log('Clear: ' + DataService.allCards.getValue()[DataService.CardType.Table].length);
@@ -316,7 +357,8 @@ export class DataService {
 
           const headers = new Headers({ 'Content-Type': 'application/json' });
           const options = new RequestOptions({ headers: headers, params: params });
-          this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+          //this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+          this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
             data   => {
               if (data != null) {
                 this.updateCards(data);

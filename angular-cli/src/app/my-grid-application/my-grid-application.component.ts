@@ -20,6 +20,10 @@ import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.c
     styleUrls: ['./my-grid-application.component.css']
 })
 export class MyGridApplicationComponent implements OnInit {
+  // SELECT CONCAT('INSERT INTO #tbl EXEC sp_helptext ''', SCHEMA_NAME(o.[schema_id]), '.', o.[name], '''; INSERT INTO #tbl SELECT ''GO----', SCHEMA_NAME(o.[schema_id]), '.', o.[name], ';'';') FROM sys.all_objects o
+
+  static colors = ['#00FF00', '#FF0000', '#2020FF', '#FF0000'];
+  
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
   @ViewChild(CardsFilterComponent) public cardsFilterComponentInstance: CardsFilterComponent;
   @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
@@ -51,7 +55,30 @@ export class MyGridApplicationComponent implements OnInit {
         if (typeof(allCards[0]) !== 'undefined') {
           if (allCards[0].length > 0) {
             Object.keys(allCards[0][0]).forEach(key => {
-              columns.push({headerName: key, field: key});
+              let meta_renderer = null;
+              if (key === 'ajuro_meta') {
+                meta_renderer = function(params) {
+                  let html_value = ``;
+                  for (let i = 0; i< params.value.sources.length; i++)
+                  {
+                    if(typeof(params.value.sources[i]) === 'undefined') {
+                      continue;
+                    }
+                   // html_value += `<span class='ajuro_circle' style='background: radial-gradient(circle at 5px 5px, `
+                   // + MyGridApplicationComponent.colors[ element % MyGridApplicationComponent.colors.length ] +  `, #000);'></span>`; 
+                    html_value += `<span style='display: inline-block; background: black; border-radius: 50%; height: 16px; width: 16px; margin: 2px; background: radial-gradient(circle at 10px 10px, `
+                     + MyGridApplicationComponent.colors[ params.value.sources[i] % MyGridApplicationComponent.colors.length ] +  `, #000);'>` + params.value.sources[i] + `</span>`; 
+                  }
+                  return '<span>'+html_value+'</span>';
+                }
+                columns.push({headerName: 'DB', field: key, cellRenderer: meta_renderer});
+              }
+            });
+            Object.keys(allCards[0][0]).forEach(key => {
+              let meta_renderer = null;
+              if (key !== 'ajuro_meta') {
+                columns.push({headerName: key, field: key});
+              }
             });
           }
         }

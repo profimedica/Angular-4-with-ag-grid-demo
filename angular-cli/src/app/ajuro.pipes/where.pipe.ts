@@ -22,7 +22,8 @@ export class WherePipeComponent implements PipeTransform {
         (<Array<any>>values).forEach(value => {
           if (typeof(value) === 'object') {
             if (value.hasOwnProperty(argument)) {
-              if (args[argument] === '' || value[argument].indexOf(args[argument]) > 0) {
+              const filterValue = (<string>args[argument]).toUpperCase();
+              if (args[argument] === '' || (<string>value[argument]).toUpperCase().indexOf(filterValue) > 0) {
                 results.push(value);
               }
             }
