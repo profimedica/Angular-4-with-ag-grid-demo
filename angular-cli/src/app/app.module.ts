@@ -15,7 +15,9 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PipesModule } from './ajuro.pipes/pipes.module';
 
+import "ag-grid-enterprise";
 import {AgGridModule} from 'ag-grid-angular/main';
+import { AgGridNg2 } from 'ag-grid-ng2/main';
 import {AppComponent} from './app.component';
 import {MyGridApplicationComponent} from './my-grid-application/my-grid-application.component';
 import {RedComponentComponent} from './red-component/red-component.component';

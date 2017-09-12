@@ -18045,7 +18045,7 @@ var MenuItemMapper = (function () {
                 subMenu: this.createAggregationSubMenu(column)
             };
             case 'autoSizeThis': return {
-                name: localeTextFunc('autosizeThiscolumn', 'Autosize This Column'),
+                name: localeTextFunc('autosizeThiscolumn', 'Autosize This0000 Column'),
                 action: function () { return _this.columnController.autoSizeColumn(column); }
             };
             case 'autoSizeAll': return {

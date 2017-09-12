@@ -41,6 +41,7 @@
     "@swimlane/ngx-datatable": "^10.2.1",
     "ag-grid": "12.0.x",
     "ag-grid-angular": "12.0.x",
+    "ag-grid-ng2": "5.0.x",
     "ag-grid-enterprise": "12.0.x",
     "ajv": "^5.2.2",
     "angular-mocks": "^1.6.6",

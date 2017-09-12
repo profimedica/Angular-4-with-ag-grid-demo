@@ -52,7 +52,7 @@ export class MyGridApplicationComponent implements OnInit {
             allowedAggFuncs: ['sum','min','max','bollocks']
           },
           enableColResize: true,
-          rowModelType: 'enterprise',
+         // rowModelType: 'enterprise',
           rowGroupPanelShow: 'always',
           animateRows: true,
           showToolPanel: true,
