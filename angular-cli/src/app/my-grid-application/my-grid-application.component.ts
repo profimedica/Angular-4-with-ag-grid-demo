@@ -43,7 +43,22 @@ export class MyGridApplicationComponent implements OnInit {
     constructor(public dataService: DataService) {
       MyGridApplicationComponent.that = this;
         this.gridOptions = <GridOptions>{
-          onRowDoubleClicked: this.doSomething
+          onRowDoubleClicked: this.doSomething,
+          defaultColDef: {
+            filter: 'text',
+            filterParams: {
+                newRowsAction: 'keep'
+            },
+            allowedAggFuncs: ['sum','min','max','bollocks']
+          },
+          enableColResize: true,
+          rowModelType: 'enterprise',
+          rowGroupPanelShow: 'always',
+          animateRows: true,
+          showToolPanel: true,
+          enableSorting: true,
+          suppressDragLeaveHidesColumns: true,
+          debug: true
         };
 
       DataService.LastType.subscribe((LastType) => {
