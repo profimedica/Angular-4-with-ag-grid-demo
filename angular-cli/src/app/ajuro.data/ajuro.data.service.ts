@@ -55,7 +55,7 @@ export class DataService {
 
   // Setter for a given cards type
   public injectRecords(cardType: number, data: any, source: number, cards: Array<{}>) {
-    const existentData = Object.assign([], cards); 
+    const existentData = Object.assign([], cards);
     if (data.length > 0) {
       const properties = Object.getOwnPropertyNames(data[0]);
       for (let k = 0; k < data.length; k++) {
@@ -358,8 +358,8 @@ export class DataService {
 
           const headers = new Headers({ 'Content-Type': 'application/json' });
           const options = new RequestOptions({ headers: headers, params: params });
-          //this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
-          this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
+          this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+          // this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
             data   => {
               if (data != null) {
                 this.updateCards(data);

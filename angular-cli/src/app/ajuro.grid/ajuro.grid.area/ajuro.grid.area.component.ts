@@ -1,10 +1,6 @@
-import { CardsFilterComponent } from './../../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
 import { PipesModule } from './../../ajuro.pipes/pipes.module';
 import { DataPresenterComponent } from './../../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { DataService } from './../../ajuro.data/ajuro.data.service';
-// import { CardsService } from '../ajuro.cards/ajuro.cards.service';
-import { AjuroCardsModule } from './../../ajuro.cards/ajuro.cards.module';
-// import { CardsListComponent } from './../CardsModule';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
@@ -12,19 +8,18 @@ import { RedComponentComponent } from '../../red-component/red-component.compone
 import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
          MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
 import { GridOptions } from 'ag-grid/main';
-import { CardsListComponent } from '../../ajuro.cards/ajuro.list/ajuro.cards.list.component';
 
 @Component({
     selector: 'app-grid-area',
     templateUrl: './ajuro.grid.area.html',
-    styleUrls: ['./ajuro.grid.area.component.css']
+    styleUrls: ['./../ajuro.grid.style.css'],
+    providers: [DataService]
 })
 export class GridAreaComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
-  @ViewChild(CardsFilterComponent) public cardsFilterComponentInstance: CardsFilterComponent;
-  @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
-  // https://stackoverflow.com/questions/37100891/access-child-components-providers-in-angular2
 
+  
+  static colors = ['#00FF00', '#FF0000', '#2020FF', '#FF0000'];
     static that;
     static GenericPurposeIndex = 0;
     RequestsHistoryCards: FormGroup;
@@ -38,9 +33,24 @@ export class GridAreaComponent implements OnInit {
 
     constructor(public dataService: DataService) {
       GridAreaComponent.that = this;
-        this.gridOptions = <GridOptions>{
-          onRowDoubleClicked: this.doSomething
-        };
+      this.gridOptions = <GridOptions>{
+        onRowDoubleClicked: this.doSomething,
+        defaultColDef: {
+          filter: 'text',
+          filterParams: {
+              newRowsAction: 'keep'
+          },
+          allowedAggFuncs: ['sum','min','max','bollocks']
+        },
+        enableColResize: true,
+       // rowModelType: 'enterprise',
+        rowGroupPanelShow: 'always',
+        animateRows: true,
+        showToolPanel: true,
+        enableSorting: true,
+        suppressDragLeaveHidesColumns: true,
+        debug: true
+      };
 
       DataService.LastType.subscribe((LastType) => {
         GridAreaComponent.that.TypeOnDisplay = LastType;
@@ -51,13 +61,34 @@ export class GridAreaComponent implements OnInit {
         if (typeof(allCards[0]) !== 'undefined') {
           if (allCards[0].length > 0) {
             Object.keys(allCards[0][0]).forEach(key => {
-              columns.push({headerName: key, field: key});
+              let meta_renderer = null;
+              if (key === 'ajuro_meta') {
+                meta_renderer = function(params) {
+                  let html_value = ``;
+                  for (let i = 0; i < params.value.sources.length; i++)
+                  {
+                    if(typeof(params.value.sources[i]) === 'undefined') {
+                      continue;
+                    }
+                   // html_value += `<span class='ajuro_circle' style='background: radial-gradient(circle at 5px 5px, `
+                   // + MyGridApplicationComponent.colors[ element % MyGridApplicationComponent.colors.length ] +  `, #000);'></span>`;
+                    html_value += `<span style='display: inline-block; background: black; border-radius: 50%; height: 16px; width: 16px; margin: 2px; background: radial-gradient(circle at 10px 10px, `
+                     + GridAreaComponent.colors[ params.value.sources[i] % GridAreaComponent.colors.length ] +  `, #000);'>` + params.value.sources[i] + `</span>`;
+                  }
+                  return '<span>'+html_value+'</span>';
+                }
+                columns.push({headerName: 'DB', field: key, cellRenderer: meta_renderer});
+              }
+            });
+            Object.keys(allCards[0][0]).forEach(key => {
+              let meta_renderer = null;
+              if (key !== 'ajuro_meta') {
+                columns.push({headerName: key, field: key});
+              }
             });
           }
         }
-
         GridAreaComponent.that.columnDefs = columns;
-
         this.rowData = allCards[0];
       });
     }
@@ -103,22 +134,22 @@ export class GridAreaComponent implements OnInit {
     };
 
     AddHistory() {
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
     }
     SelectTable (data) {
       const tableIndex = parseInt(data.substring(2), 10);
       GridAreaComponent.that.SelectedSchema = GridAreaComponent.that.Tables.data[tableIndex].Schema;
       GridAreaComponent.that.SelectedTable = GridAreaComponent.that.Tables.data[tableIndex].Table;
 
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Table);
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.View);
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Procedure);
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Function);
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Key);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Table);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.View);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Procedure);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Function);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Key);
     }
     GoBack() {
       // -- //
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
     }
 
     UpdateTable() {
@@ -137,13 +168,13 @@ export class GridAreaComponent implements OnInit {
         case DataService.CardType.Database:
         GridAreaComponent.that.SelectedSchema = row.data.Schema;
         GridAreaComponent.that.SelectedTable = row.data.Table;
-        GridAreaComponent.that.dataPresenterComponentInstance.dataService
+        GridAreaComponent.that.dataService
         .PostRequest(DataService.CardType.Table, row.rowIndex);
-        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataService.
         PostRequest(DataService.CardType.View, row.rowIndex);
-        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataService.
         PostRequest(DataService.CardType.Procedure, row.rowIndex);
-        GridAreaComponent.that.dataPresenterComponentInstance.dataService.
+        GridAreaComponent.that.dataService.
         PostRequest(DataService.CardType.Key, row.rowIndex);
         break;
         case DataService.CardType.Column:
@@ -168,7 +199,7 @@ export class GridAreaComponent implements OnInit {
       this.TableCards = new FormGroup({
         // Will hold all cards
       });
-      GridAreaComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
     }
 
     GetData() {
