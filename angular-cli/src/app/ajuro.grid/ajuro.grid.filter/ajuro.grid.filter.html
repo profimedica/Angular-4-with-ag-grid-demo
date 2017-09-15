@@ -1,1 +1,17 @@
-<div><input id='grid_filter' style='width: 229px' [(ngModel)]="GridFilterValue" (keyup)="gridFilterChanged($event)"></div>
+<div class='FilterPanel'>
+    <input id='grid_filter' style='width: 229px;' > (keyup)="gridFilterChanged($event)">
+    <div class='column_name'>
+    <span>City</span>
+    <table>
+        <tr>
+            <td>on</td><td>Exp:</td><td><input type='text'></td><td>W</td><td><input type='text'></td><td>55</td>
+        </tr>
+    </table>
+    <div *ngFor='let item of GridFilters'>
+      <span clss='columnName'>{{item['ColumnName']}}</span>
+      <span clss='Weight'>{{item['Weight']}}</span>
+      <span clss='Treshould'>{{item['LowerLimit']}}</span>
+      <span clss='Expression'>{{item['Expression']}}</span>
+      <span clss='Separator'></span>
+    </div>
+</div>

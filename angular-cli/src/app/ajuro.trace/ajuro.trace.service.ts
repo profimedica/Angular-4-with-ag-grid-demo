@@ -21,5 +21,4 @@ export class TraceService {
   private allCards: any;
 
   constructor() { }
-
 }

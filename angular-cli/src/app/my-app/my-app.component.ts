@@ -2,6 +2,7 @@ import { CardsFilterComponent } from './../ajuro.cards/ajuro.filter/ajuro.cards.
 import { PipesModule } from './../ajuro.pipes/pipes.module';
 import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { GridAreaComponent } from './../ajuro.grid/ajuro.grid.area/ajuro.grid.area.component';
+import { GridFilterComponent } from './../ajuro.grid/ajuro.grid.filter/ajuro.grid.filter.component';
 import { DataService } from './../ajuro.data/ajuro.data.service';
 // import { CardsService } from '../ajuro.cards/ajuro.cards.service';
 import { AjuroCardsModule } from './../ajuro.cards/ajuro.cards.module';
@@ -16,8 +17,8 @@ import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.c
 
 @Component({
     selector: 'app-my-grid-application',
-    templateUrl: './my-grid-application.component.html',
-    styleUrls: ['./my-grid-application.component.css']
+    templateUrl: './my-app.html',
+    styleUrls: ['./my-app.css']
 })
 export class MyGridApplicationComponent implements OnInit {
   // SELECT CONCAT('INSERT INTO #tbl EXEC sp_helptext ''', SCHEMA_NAME(o.[schema_id]), '.', o.[name], '''; INSERT INTO #tbl SELECT ''GO----', SCHEMA_NAME(o.[schema_id]), '.', o.[name], ';'';') FROM sys.all_objects o
@@ -28,6 +29,7 @@ export class MyGridApplicationComponent implements OnInit {
   @ViewChild(CardsFilterComponent) public cardsFilterComponentInstance: CardsFilterComponent;
   @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
   @ViewChild(GridAreaComponent) public gridAreaComponentInstance: GridAreaComponent;
+  @ViewChild(GridFilterComponent) public gridFilterComponentInstance: GridFilterComponent;
   // https://stackoverflow.com/questions/37100891/access-child-components-providers-in-angular2
 
     static that;
@@ -58,7 +60,7 @@ export class MyGridApplicationComponent implements OnInit {
                     }
                     html_value += `<span style='display: inline-block; background: black; border-radius: 50%; `;
                     html_value += `height: 16px; width: 16px; margin: 2px; background: radial-gradient(circle at 10px 10px,`;
-                    html_value += MyGridApplicationComponent.colors[ params.value.sources[i] % MyGridApplicationComponent.colors.length ] 
+                    html_value += MyGridApplicationComponent.colors[ params.value.sources[i] % MyGridApplicationComponent.colors.length ]
                      +  `, #000);'>` + params.value.sources[i] + `</span>`;
                   }
                   return '<span>' + html_value + '</span>';

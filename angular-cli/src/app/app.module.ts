@@ -3,6 +3,7 @@ import { CardsFilterComponent } from './ajuro.cards/ajuro.filter/ajuro.cards.fil
 import { DataService } from './ajuro.data/ajuro.data.service';
 import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
 import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
+import { GridFilterComponent } from './ajuro.grid/ajuro.grid.filter/ajuro.grid.filter.component';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +20,7 @@ import { PipesModule } from './ajuro.pipes/pipes.module';
 import {AgGridModule} from 'ag-grid-angular/main';
 import {AppComponent} from './app.component';
 import {GridAreaComponent} from './ajuro.grid/ajuro.grid.area/ajuro.grid.area.component';
-import {MyGridApplicationComponent} from './my-grid-application/my-grid-application.component';
+import {MyGridApplicationComponent} from './my-app/my-app.component';
 import {RedComponentComponent} from './red-component/red-component.component';
 
 // Modules
@@ -34,6 +35,7 @@ import { AjuroInterceptor } from './my.interceptor';
         CardsSourcesComponent,
         CardsListComponent,
         CardsFilterComponent,
+        GridFilterComponent,
         MyGridApplicationComponent,
         RedComponentComponent,
         GridAreaComponent
