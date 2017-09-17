@@ -1,5 +1,7 @@
 ## Quickstart seed projects for on getting up and running with ag-Grid and Angular
 
+![alt text](https://raw.githubusercontent.com/profimedica/Angular-4-with-ag-grid-demo/master/angular-cli/docs/img/Version%201.0.png)
+
 # Navigate to the build tool of your choice: 
 * Angular CLI
 * Webpack
