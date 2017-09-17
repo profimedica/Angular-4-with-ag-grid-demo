@@ -25,13 +25,21 @@ private static that: DataService;
   public static RequestType = {
     Tag: 0,
     Data: 1,
-    Filters: 2
+    Filters: 2,
+    GetDescription: 3,
+    SetDescription: 4
   };
+
+  // Last used card
+  public static SelectedCard = new BehaviorSubject({CardType: null, CardData: null});
 
   // Here all cards will be stored by type. The indexes are provided by CardType
   public static cardsFilterValue = new BehaviorSubject('');
   public static gridFilterValue = new BehaviorSubject('');
+
   public static cardPreviewDescription = new BehaviorSubject('');
+  public static oldCardPreviewDescription = '';
+
   public static gridFilters = new BehaviorSubject(new Array<Object>());
   public static allCards = new BehaviorSubject(new Array());
   public static LastType = new BehaviorSubject(-1);
@@ -59,11 +67,17 @@ private static that: DataService;
   }
   DataService.inst++;
 
-    DataService.allCards.subscribe((allCards) => {
-      if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
-        console.log('Updated tables to: ' + allCards[DataService.CardType.Table].length);
-      }
-    });
+  DataService.allCards.subscribe((allCards) => {
+    if (typeof(allCards[DataService.CardType.Table]) !== 'undefined') {
+      console.log('Updated tables to: ' + allCards[DataService.CardType.Table].length);
+    }
+  });
+
+  DataService.cardPreviewDescription.subscribe((newDescription) => {
+    if (DataService.oldCardPreviewDescription !== newDescription) {
+      this.PostObjectRequest(DataService.RequestType.SetDescription, newDescription);
+    }
+  });
 
     console.log('DataService.inst:' + DataService.inst);
 
@@ -279,6 +293,67 @@ private static that: DataService;
         return filters;
       }
 
+  public PreviewCard(CardType: number, data: {}) {
+    DataService.SelectedCard.next({ CardType: CardType, CardData: data});
+    this.PostObjectRequest(DataService.RequestType.GetDescription, null);
+  }
+
+  public PostObjectRequest(RequestType: number, Data: {}) {
+    const selectedCard = DataService.SelectedCard.getValue();
+    this.getConnections().forEach(connection => {
+      const params = {
+        action: null,
+        database: this.getDatabase(),
+        connection: connection,
+        schema: selectedCard.CardData['Schema'],
+        object_type: null,
+        object: selectedCard.CardData['Table'],
+        field: null,
+        value: null,
+        description: Data
+      };
+
+      switch (RequestType) {
+        case DataService.RequestType.GetDescription:
+        params.action = 'get_description';
+        break;
+        case DataService.RequestType.SetDescription:
+        params.action = 'set_description';
+        break;
+      }
+
+      switch (selectedCard.CardType) {
+        case DataService.CardType.Table:
+        params.object_type = 'Table';
+        break;
+        case DataService.CardType.Column:
+        params.object_type = 'Column';
+        break;
+      }
+
+      const headers = new Headers({ 'Content-Type': 'application/json' });
+      const options = new RequestOptions({ headers: headers, params: params });
+      this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+      // this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
+        data => {
+          if (data != null) {
+            if (data.hasOwnProperty('description')) {
+              DataService.oldCardPreviewDescription = data['description'];
+              DataService.cardPreviewDescription.next(data['description']);
+            } else {
+              this.updateCards(data);
+            }
+            console.log(data + ' results!' + JSON.stringify(data['post']));
+          } else {
+            console.log('No results!');
+          }
+        },
+        error => {
+          console.log(JSON.stringify(error));
+        }
+      );
+    });
+  }
   // Bring data from Backend API as Json
   public PostRequest(CardType: number, data: {}, RequestType: number) {
 

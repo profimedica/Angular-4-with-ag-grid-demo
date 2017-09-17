@@ -48,3 +48,27 @@
   border: none;
   background-color: #FFFF88;
 }
+
+.preview_card {
+  color: gray;
+  font-size: xx-large;
+}
+
+.preview_card_type {
+  color: red;
+}
+
+.preview_card_schema {
+  color: clack;
+  font-style: italic;
+}
+
+.preview_card_table {
+  color: blue;
+  font-weight: bold;
+}
+
+.preview_card_column {
+  color: indigo;
+  font-weight: bold;
+}

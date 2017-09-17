@@ -54,27 +54,33 @@ export class CardsListComponent implements OnInit {
 
    PreviewColumn(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Column, id, DataService.RequestType.Tag);
+    .PreviewCard(DataService.CardType.Column,
+      this.allColumnCards[id]);
    }
    PreviewFunction(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Function, id, DataService.RequestType.Tag);
+      .PreviewCard(DataService.CardType.Function,
+        this.allFunctionCards[id]);
    }
    PreviewKey(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Key, id, DataService.RequestType.Tag);
+      .PreviewCard(DataService.CardType.Key,
+        this.allKeyCards[id]);
    }
    PreviewProcedure(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Procedure, id, DataService.RequestType.Tag);
+      .PreviewCard(DataService.CardType.Procedure,
+        this.allProcedureCards[id]);
    }
    PreviewTable(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Table, id, DataService.RequestType.Tag);
+      .PreviewCard(DataService.CardType.Table,
+        this.allTableCards[id]);
    }
    PreviewView(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.View, id, DataService.RequestType.Tag);
+      .PreviewCard(DataService.CardType.View,
+        this.allViewCards[id]);
    }
    NavigateToColumn(id) {
     CardsListComponent.that.dataPresenterComponentInstance.dataService

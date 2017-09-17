@@ -65,9 +65,8 @@ export class GridAreaComponent implements OnInit {
               if (key === 'ajuro_meta') {
                 meta_renderer = function(params) {
                   let html_value = ``;
-                  for (let i = 0; i < params.value.sources.length; i++)
-                  {
-                    if(typeof(params.value.sources[i]) === 'undefined') {
+                  for (let i = 0; i < params.value.sources.length; i++) {
+                    if (typeof(params.value.sources[i]) === 'undefined') {
                       continue;
                     }
                    // html_value += `<span class='ajuro_circle' style='background: radial-gradient(circle at 5px 5px, `
@@ -75,8 +74,8 @@ export class GridAreaComponent implements OnInit {
                     html_value += `<span style='display: inline-block; background: black; border-radius: 50%; height: 16px; width: 16px; margin: 2px; background: radial-gradient(circle at 10px 10px, `
                      + GridAreaComponent.colors[ params.value.sources[i] % GridAreaComponent.colors.length ] +  `, #000);'>` + params.value.sources[i] + `</span>`;
                   }
-                  return '<span>'+html_value+'</span>';
-                }
+                  return '<span>' + html_value + '</span>';
+                };
                 columns.push({headerName: 'DB', field: key, cellRenderer: meta_renderer});
               }
             });

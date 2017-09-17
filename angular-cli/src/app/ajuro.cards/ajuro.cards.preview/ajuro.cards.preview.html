@@ -1,1 +1,9 @@
-<div><input class='object_description' [(ngModel)]="DescriptionValue" (keyup)="decriptionChanged($event)"></div>
+<div>
+  <div class='object_path'>
+    <span class="preview_card_type">{{preview_card_type}}</span>
+    [<span class="preview_card_schema">{{preview_card_schema}}</span>]
+    .[<span class="preview_card_table">{{preview_card_table}}</span>]
+    .[<span class="preview_card_column">{{preview_card_column}}</span>]
+  </div>
+  <input class='object_description' [(ngModel)]="DescriptionValue" (keyup)="decriptionChanged($event)">
+</div>
