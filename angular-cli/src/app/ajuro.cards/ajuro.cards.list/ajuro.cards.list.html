@@ -1,7 +1,7 @@
 <app-data-provider></app-data-provider>
  <div *ngFor="let itemz of allTableCards | where : {'Table':FilterValue}; let i = index">
    <div class='my_table_card object_tab_element'
-   (mouseenter)="NavigateToTable(i)"
+   (mouseenter)="PreviewTable(i)"
    (dblclick)="NavigateToTable(i)">
    <span [innerHTML]="itemz['ajuro_meta'].sources | diff_to_color"></span>
    <span>{{itemz['Schema']}}</span>.
@@ -9,30 +9,35 @@
  </div>
  <div *ngFor="let itemz of allViewCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_view_card object_tab_element'
+   (mouseenter)="PreviewView(i)"
    (dblclick)="NavigateToView(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
  <div *ngFor="let itemz of allColumnCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_column_card object_tab_element'
+   (mouseenter)="PreviewColumn(i)"
    (dblclick)="NavigateToColumn(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
  <div *ngFor="let itemz of allProcedureCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_procedure_card object_tab_element'
+   (mouseenter)="PreviewProcedure(i)"
    (dblclick)="NavigateToProcedure(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Name']}}</span></div>
  </div>
  <div *ngFor="let itemz of allFunctionCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_function_card object_tab_element'
+   (mouseenter)="PreviewFunction(i)"
    (dblclick)="NavigateToFunction(i)">
    <span>{{itemz['Schema']}}</span>.
    <span>{{itemz['Table']}}</span></div>
  </div>
  <div *ngFor="let itemz of allKeyCards | where : {'Table':FilterValue} ; let i = index">
    <div class='my_key_card object_tab_element'
+   (mouseenter)="PreviewKey(i)"
    (dblclick)="NavigateToKey(i)">
    <span>{{itemz['ParentTable']}}</span>.
    <span>{{itemz['ParentColumn']}}</span>

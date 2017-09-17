@@ -1,7 +1,8 @@
-import { CardsSourcesComponent } from './ajuro.cards/ajuro.sources/ajuro.cards.sources.component';
-import { CardsFilterComponent } from './ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { CardsSourcesComponent } from './ajuro.cards/ajuro.cards.sources/ajuro.cards.sources';
+import { CardsFilterComponent } from './ajuro.cards/ajuro.cards.filter/ajuro.cards.filter';
 import { DataService } from './ajuro.data/ajuro.data.service';
-import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
+import { CardsListComponent } from './ajuro.cards/ajuro.cards.list/ajuro.cards.list';
+import { CardsPreviewComponent } from './ajuro.cards/ajuro.cards.preview/ajuro.cards.preview';
 import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { GridFilterComponent } from './ajuro.grid/ajuro.grid.filter/ajuro.grid.filter.component';
 import {NgModule} from '@angular/core';
@@ -35,6 +36,7 @@ import { AjuroInterceptor } from './my.interceptor';
         CardsSourcesComponent,
         CardsListComponent,
         CardsFilterComponent,
+        CardsPreviewComponent,
         GridFilterComponent,
         MyGridApplicationComponent,
         RedComponentComponent,

@@ -1,4 +1,5 @@
-import { CardsFilterComponent } from './../ajuro.cards/ajuro.filter/ajuro.cards.filter.component';
+import { FilterModel } from '../ajuro.grid/FilterModel';
+import { CardsFilterComponent } from './../ajuro.cards/ajuro.cards.filter/ajuro.cards.filter';
 import { PipesModule } from './../ajuro.pipes/pipes.module';
 import { DataPresenterComponent } from './../ajuro.data/ajuro.presenter/ajuro.data.presenter.component';
 import { GridAreaComponent } from './../ajuro.grid/ajuro.grid.area/ajuro.grid.area.component';
@@ -13,7 +14,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RedComponentComponent } from '../red-component/red-component.component';
 import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
          MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
-import { CardsListComponent } from '../ajuro.cards/ajuro.list/ajuro.cards.list.component';
+import { CardsPreviewComponent } from '../ajuro.cards/ajuro.cards.preview/ajuro.cards.preview';
+import { CardsListComponent } from '../ajuro.cards/ajuro.cards.list/ajuro.cards.list';
 
 @Component({
     selector: 'app-my-grid-application',
@@ -30,6 +32,7 @@ export class MyGridApplicationComponent implements OnInit {
   @ViewChild(CardsListComponent) public cardsListComponentInstance: CardsListComponent;
   @ViewChild(GridAreaComponent) public gridAreaComponentInstance: GridAreaComponent;
   @ViewChild(GridFilterComponent) public gridFilterComponentInstance: GridFilterComponent;
+  @ViewChild(CardsPreviewComponent) public cardsPreviewComponentInstance: CardsPreviewComponent;
   // https://stackoverflow.com/questions/37100891/access-child-components-providers-in-angular2
 
     static that;
@@ -44,6 +47,10 @@ export class MyGridApplicationComponent implements OnInit {
       GridAreaComponent.that = this;
       DataService.LastType.subscribe((LastType) => {
         // MyGridApplicationComponent.that.TypeOnDisplay = LastType;
+      });
+
+      DataService.gridFilters.subscribe((FilterModel) => {
+
       });
 
       DataService.allCards.subscribe((allCards) => {
@@ -114,17 +121,6 @@ export class MyGridApplicationComponent implements OnInit {
 
     AddHistory() {
       MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Database);
-    }
-    SelectTable (data) {
-      const tableIndex = parseInt(data.substring(2), 10);
-      MyGridApplicationComponent.that.SelectedSchema = MyGridApplicationComponent.that.Tables.data[tableIndex].Schema;
-      MyGridApplicationComponent.that.SelectedTable = MyGridApplicationComponent.that.Tables.data[tableIndex].Table;
-
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Table);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.View);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Procedure);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Function);
-      MyGridApplicationComponent.that.dataPresenterComponentInstance.dataService.PostRequest(DataService.CardType.Key);
     }
     GoBack() {
       // -- //

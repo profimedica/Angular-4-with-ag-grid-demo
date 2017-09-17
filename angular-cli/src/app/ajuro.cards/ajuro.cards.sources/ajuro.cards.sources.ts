@@ -37,7 +37,19 @@ export class CardsSourcesComponent implements OnInit {
 
    NavigateToDatabase(id) {
     CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
-      .PostRequest(DataService.CardType.Table, id);
+      .PostRequest(DataService.CardType.Table, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.View, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Column, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Function, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Procedure, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Procedure, id, DataService.RequestType.Data);
+    CardsSourcesComponent.that.dataPresenterComponentInstance.dataService
+      .PostRequest(DataService.CardType.Procedure, id, DataService.RequestType.Data);
    }
 
   ngOnInit() {

@@ -39,3 +39,12 @@
   margin: 2px;
   background: radial-gradient(circle at 10px 10px, #5cabff, #000);
 }
+
+.object_description {
+  width: 100%;
+  height: 40px;
+  color: black;
+  font-size: xx-large;
+  border: none;
+  background-color: #FFFF88;
+}

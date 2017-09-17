@@ -13,7 +13,7 @@ import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RedComponentComponent} from './red-component/red-component.component';
 import {AgGridModule} from 'ag-grid-angular';
-import {MyGridApplicationComponent} from './my-grid-application/my-grid-application.component';
+import {MyGridApplicationComponent} from './my-app/my-app.component';
 import { CardsListComponent } from './ajuro.cards/ajuro.list/ajuro.cards.list.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';

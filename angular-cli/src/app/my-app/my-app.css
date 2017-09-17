@@ -18,7 +18,17 @@ justify-content: center;
 padding: 25px;
 }
 
-.objects_tab {
+.ajuro_circle {
+  display: inline-block;
+  background: black;
+  border-radius: 50%;
+  height: 16px;
+  width: 16px;
+  margin: 2px;
+  background: radial-gradient(circle at 10px 10px, #5cabff, #000);
+}
+
+.cards_panel {
   position: fixed;
   left: 0px;
   height: 100%;
@@ -29,12 +39,13 @@ padding: 25px;
   overflow-x: hidden;
 }
 
-.ajuro_circle {
-  display: inline-block;
-  background: black;
-  border-radius: 50%;
-  height: 16px;
-  width: 16px;
-  margin: 2px;
-  background: radial-gradient(circle at 10px 10px, #5cabff, #000);
+.filters_panel {
+  position: fixed;
+  right: 0px;
+  height: 100%;
+  width: 250px;
+  max-width: 250px;
+  background-color: white;
+  overflow: scroll;
+  overflow-x: hidden;
 }

@@ -2,16 +2,19 @@
 <md-tab-group>
     <md-tab label="DATA">
       <app-cards-filter></app-cards-filter>
-      <div class='objects_tab'>
+      <div class='cards_panel'>
         <!--button type="button" md-button (click)="GoBack()">Back</button-->
         <app-cards-sources></app-cards-sources>
         <app-cards-list></app-cards-list>
         <app-data-provider></app-data-provider>
       </div>
-      <span style='width: 1640px; margin-top: 0px; vertical-align: top; float:right'>
-          <app-grid-filter></app-grid-filter>
-          <app-grid-area></app-grid-area>
+      <span style='width: 840px; margin-top: 0px; margin-left: 250px; vertical-align: top; float:left'>
+        <app-card-preview></app-card-preview>
+        <app-grid-area></app-grid-area>
       </span>
+      <div class='filters_panel'>
+        <app-grid-filter></app-grid-filter>
+      </div>
       <span style='width: 300px;'>
         <form [formGroup]="TableCards" novalidate  style='width: 300px; display: inline-block'>
             <div *ngFor="let itemz of TableCards.controls | properties | where : {'use':FilterValue}">

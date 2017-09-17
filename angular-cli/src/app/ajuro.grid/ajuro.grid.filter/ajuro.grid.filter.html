@@ -1,17 +1,75 @@
 <div class='FilterPanel'>
-    <input id='grid_filter' style='width: 229px;' > (keyup)="gridFilterChanged($event)">
-    <div class='column_name'>
-    <span>City</span>
+    <div>
     <table>
         <tr>
-            <td>on</td><td>Exp:</td><td><input type='text'></td><td>W</td><td><input type='text'></td><td>55</td>
+            <td>Edit filter for:</td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <select class='filter_element' [(ngModel)]="SelectedFilter.ColumnName">
+              <option *ngFor="let column of ColumnDefs" [ngValue]="column['headerName']">{{column['headerName']}}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <textarea class='filter_element' (keyup)="gridFilterChanged($event)" [(ngModel)]="SelectedFilter.Expression"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Weight:
+          </td>
+          <td>
+            <input class='filter_element' [(ngModel)]="SelectedFilter.Weight" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Order:
+          </td>
+          <td>
+            <select class='filter_element' (change)="gridFilterChanged($event)" [(ngModel)]="SelectedFilter.Order">
+                <option>None</option>
+                <option>Asc</option>
+                <option>Desc</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            UpperLimit:
+          </td>
+          <td>
+            <input class='filter_element' [(ngModel)]="SelectedFilter.UpperLimit" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            LowerLimit:
+          </td>
+          <td>
+            <input class='filter_element' [(ngModel)]="SelectedFilter.LowerLimit" >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Max. Records:
+          </td>
+          <td>
+            <input class='filter_element' [(ngModel)]="SelectedFilter.MaxRecords" >
+          </td>
         </tr>
     </table>
     <div *ngFor='let item of GridFilters'>
-      <span clss='columnName'>{{item['ColumnName']}}</span>
-      <span clss='Weight'>{{item['Weight']}}</span>
-      <span clss='Treshould'>{{item['LowerLimit']}}</span>
-      <span clss='Expression'>{{item['Expression']}}</span>
-      <span clss='Separator'></span>
+      <div class='filter_description' (mouseenter)='editFilter(item)'>
+        <span class='filter_column' >{{item['ColumnName']}}</span>
+        <div>
+          <span class='Weight'>{{item['Weight']}}</span>
+          <span class='filter_expression'>{{item['Expression']}}</span>
+          [<span class='filter_tolerance'>{{item['UpperLimit']}}</span> - <span class='filter_tolerance'>{{item['LowerLimit']}}</span>]
+        </div>
+        <span class='Separator'></span>
+      </div>
     </div>
 </div>

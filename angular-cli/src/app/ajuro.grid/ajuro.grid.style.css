@@ -17,3 +17,29 @@
 .sidenav {
   padding: 25px;
 }
+
+.filter_element {
+  width: 100%
+}
+
+.filter_column {
+    color: red;
+    font-weight: bold;
+}
+
+.filter_description {
+  width: 100%;
+  border-top: 1px solid gray;
+  font-style: italic;
+  color: gray;
+}
+
+.filter_expression {
+  color: green;
+  font-weight: bold;
+}
+
+.filter_tolerance {
+  color: black;
+  font-weight: bold;
+}

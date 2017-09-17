@@ -18,7 +18,7 @@ import { GridOptions } from 'ag-grid/main';
 export class GridAreaComponent implements OnInit {
   @ViewChild(DataPresenterComponent) public dataPresenterComponentInstance: DataPresenterComponent;
 
-  
+
   static colors = ['#00FF00', '#FF0000', '#2020FF', '#FF0000'];
     static that;
     static GenericPurposeIndex = 0;
@@ -134,22 +134,22 @@ export class GridAreaComponent implements OnInit {
     };
 
     AddHistory() {
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database, null, DataService.RequestType.Data);
     }
     SelectTable (data) {
       const tableIndex = parseInt(data.substring(2), 10);
       GridAreaComponent.that.SelectedSchema = GridAreaComponent.that.Tables.data[tableIndex].Schema;
       GridAreaComponent.that.SelectedTable = GridAreaComponent.that.Tables.data[tableIndex].Table;
 
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Table);
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.View);
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Procedure);
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Function);
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Key);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Table, null, DataService.RequestType.Data);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.View, null, DataService.RequestType.Data);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Procedure, null, DataService.RequestType.Data);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Function, null, DataService.RequestType.Data);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Key, null, DataService.RequestType.Data);
     }
     GoBack() {
       // -- //
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database, null, DataService.RequestType.Data);
     }
 
     UpdateTable() {
@@ -160,7 +160,7 @@ export class GridAreaComponent implements OnInit {
     }
 
     doSomething(row) {
-      switch (GridAreaComponent.that.TypeOnDisplay) {
+      switch (GridAreaComponent.that.TypeOnDisplay) {/*
         case -1:
         GridAreaComponent.that.dataService
         .PostRequest(DataService.CardType.Database, row.rowIndex);
@@ -170,6 +170,7 @@ export class GridAreaComponent implements OnInit {
         GridAreaComponent.that.SelectedTable = row.data.Table;
         GridAreaComponent.that.dataService
         .PostRequest(DataService.CardType.Table, row.rowIndex);
+        console.log('Teststskdfk--------------------');
         GridAreaComponent.that.dataService.
         PostRequest(DataService.CardType.View, row.rowIndex);
         GridAreaComponent.that.dataService.
@@ -182,10 +183,10 @@ export class GridAreaComponent implements OnInit {
         case DataService.CardType.Key:
         case DataService.CardType.Procedure:
         case DataService.CardType.Key:
-        case DataService.CardType.View:
+        case DataService.CardType.View:*/
         case DataService.CardType.Table:
         GridAreaComponent.that.dataService.
-        PostRequest(DataService.CardType.Record, row.rowIndex);
+        PostRequest(DataService.CardType.Record, row.rowIndex, DataService.RequestType.Data);
         break;
       }
     }
@@ -199,7 +200,7 @@ export class GridAreaComponent implements OnInit {
       this.TableCards = new FormGroup({
         // Will hold all cards
       });
-      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database);
+      GridAreaComponent.that.dataService.PostRequest(DataService.CardType.Database, null, DataService.RequestType.Data);
     }
 
     GetData() {
