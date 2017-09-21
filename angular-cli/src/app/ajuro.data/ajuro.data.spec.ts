@@ -11,7 +11,9 @@ describe('DataService', function() {
   });
 
   it('UNIT TEST FOR FUNCTION: (method) DataService.setCards(cardType: number, data: any, source: number): void', function() {
+    // Identifier exists
     expect(this.dataService.setCards).toBeDefined();
+    // It is a function
     expect(this.dataService.setCards).toEqual(jasmine.any(Function));
   });
 

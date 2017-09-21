@@ -26,8 +26,8 @@ private static that: DataService;
     Tag: 0,
     Data: 1,
     Filters: 2,
-    GetDescription: 3,
-    SetDescription: 4
+    GetSubObject: 3,
+    SetSubObject: 4
   };
 
   // Last used card
@@ -76,7 +76,7 @@ private static that: DataService;
 
   DataService.cardPreviewDescription.subscribe((newDescription) => {
     if (DataService.oldCardPreviewDescription !== newDescription) {
-      this.PostObjectRequest(DataService.RequestType.SetDescription, 'Description', newDescription);
+      this.PostObjectRequest(DataService.RequestType.SetSubObject, 'Description', newDescription);
     }
   });
 
@@ -85,7 +85,7 @@ private static that: DataService;
         DataService.gridFilters.subscribe((filter) => {
           if (filter != null && filter.length > 0) {
             console.log(JSON.stringify(filter));
-            this.PostObjectRequest(DataService.RequestType.SetDescription, 'Filters', filter);
+            this.PostObjectRequest(DataService.RequestType.SetSubObject, 'Filters', filter);
             this.PostRequest(DataService.CardType.Record, null, DataService.RequestType.Data);
           }
         });
@@ -145,7 +145,7 @@ private static that: DataService;
         cardType !== DataService.CardType.Procedure
       ) {
           allCards[0] = this.injectRecords(cardType, data, source, allCards[0]);
-          // this.PostObjectRequest(DataService.RequestType.GetDescription, 'Filters', null);
+          // this.PostObjectRequest(DataService.RequestType.GetSubObject, 'Filters', null);
         }
 
     if (data.length > 0) {
@@ -306,7 +306,8 @@ private static that: DataService;
       DataService.SelectedTable = { CardType: CardType, CardData: data};
     }
     DataService.SelectedCard.next({ CardType: CardType, CardData: data});
-    this.PostObjectRequest(DataService.RequestType.GetDescription, 'Description', null);
+    this.PostObjectRequest(DataService.RequestType.GetSubObject, 'Description', null);
+    this.PostObjectRequest(DataService.RequestType.GetSubObject, 'Filters', null);
   }
 
   public PostObjectRequest(RequestType: number, SubObject: string, Data: {}) {
@@ -325,10 +326,10 @@ private static that: DataService;
       };
 
       switch (RequestType) {
-        case DataService.RequestType.GetDescription:
+        case DataService.RequestType.GetSubObject:
         params.action = 'get_object';
         break;
-        case DataService.RequestType.SetDescription:
+        case DataService.RequestType.SetSubObject:
         params.action = 'set_object';
         params.value = Data;
         break;
@@ -345,13 +346,15 @@ private static that: DataService;
 
       const headers = new Headers({ 'Content-Type': 'application/json' });
       const options = new RequestOptions({ headers: headers, params: params });
-      this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
-      // this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
+      //this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+      this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
         data => {
           if (data != null) {
             if (data.hasOwnProperty('Description')) {
               DataService.oldCardPreviewDescription = data['Description'];
               DataService.cardPreviewDescription.next(data['Description']);
+            } else if (data.hasOwnProperty('Filters')) {
+              DataService.gridFilters.next(data['Filters']);
             } else {
               this.updateCards(data);
             }
@@ -527,8 +530,8 @@ private static that: DataService;
 
           const headers = new Headers({ 'Content-Type': 'application/json' });
           const options = new RequestOptions({ headers: headers, params: params });
-          this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
-          // this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
+          //this.http.post('http://localhost:86/my/api/index.php', params).subscribe(
+          this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
             data => {
               if (data != null) {
                 if (data.hasOwnProperty('description')) {
