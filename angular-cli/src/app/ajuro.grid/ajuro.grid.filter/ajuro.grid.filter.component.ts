@@ -38,6 +38,7 @@ export class GridFilterComponent implements OnInit {
                 filter.UpperLimit = 1;
                 filter.LowerLimit = 100;
                 filter.Order = 'Desc';
+                filter.Value = '';
                 filter.MaxRecords = 100;
                 this.GridFilters.push(filter);
               // }
@@ -77,6 +78,10 @@ export class GridFilterComponent implements OnInit {
   }
 
   gridFilterChanged(event) {
+    DataService.gridFilters.next(this.GridFilters);
+  }
+
+  filterChanged(filterId) {
     DataService.gridFilters.next(this.GridFilters);
   }
 

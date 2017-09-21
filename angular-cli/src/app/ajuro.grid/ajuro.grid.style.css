@@ -43,3 +43,8 @@
   color: black;
   font-weight: bold;
 }
+
+.partial_filter_input{
+  width: 100%;
+  background-color: azure;
+}

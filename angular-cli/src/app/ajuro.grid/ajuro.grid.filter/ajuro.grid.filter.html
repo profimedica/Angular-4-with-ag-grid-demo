@@ -2,7 +2,7 @@
     <div>
     <table>
         <tr>
-            <td>Edit filter for:</td>
+            <td></td>
         </tr>
         <tr>
           <td colspan=2>
@@ -61,9 +61,12 @@
           </td>
         </tr>
     </table>
-    <div *ngFor='let item of GridFilters'>
+    <div *ngFor='let item of GridFilters; let i = index'>
       <div class='filter_description' (mouseenter)='editFilter(item)'>
         <span class='filter_column' >{{item['ColumnName']}}</span>
+        <span>
+          <input class='partial_filter_input' (keyup)="filterChanged(i)" [(ngModel)]="item['Value']" type="text">
+        </span>
         <div>
           <span class='Weight'>{{item['Weight']}}</span>
           <span class='filter_expression'>{{item['Expression']}}</span>
@@ -71,5 +74,8 @@
         </div>
         <span class='Separator'></span>
       </div>
+    </div>
+    <div>
+
     </div>
 </div>

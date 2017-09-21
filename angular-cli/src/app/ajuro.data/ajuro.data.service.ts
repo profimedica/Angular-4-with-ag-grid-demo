@@ -31,6 +31,7 @@ private static that: DataService;
   };
 
   // Last used card
+  public static SelectedTable = null;
   public static SelectedCard = new BehaviorSubject({CardType: null, CardData: null});
 
   // Here all cards will be stored by type. The indexes are provided by CardType
@@ -75,15 +76,17 @@ private static that: DataService;
 
   DataService.cardPreviewDescription.subscribe((newDescription) => {
     if (DataService.oldCardPreviewDescription !== newDescription) {
-      this.PostObjectRequest(DataService.RequestType.SetDescription, newDescription);
+      this.PostObjectRequest(DataService.RequestType.SetDescription, 'Description', newDescription);
     }
   });
 
     console.log('DataService.inst:' + DataService.inst);
 
         DataService.gridFilters.subscribe((filter) => {
-          if (filter != null) {
-            // this.PostRequest(DataService.CardType.Record, null, DataService.RequestType.Data);
+          if (filter != null && filter.length > 0) {
+            console.log(JSON.stringify(filter));
+            this.PostObjectRequest(DataService.RequestType.SetDescription, 'Filters', filter);
+            this.PostRequest(DataService.CardType.Record, null, DataService.RequestType.Data);
           }
         });
 
@@ -142,6 +145,7 @@ private static that: DataService;
         cardType !== DataService.CardType.Procedure
       ) {
           allCards[0] = this.injectRecords(cardType, data, source, allCards[0]);
+          // this.PostObjectRequest(DataService.RequestType.GetDescription, 'Filters', null);
         }
 
     if (data.length > 0) {
@@ -199,7 +203,11 @@ private static that: DataService;
       case DataService.CardType.Database:
       break;
       case DataService.CardType.Record:
-      selectedRecord = DataService.allCards.getValue()[DataService.CardType.Table][data];
+      if (CardType === DataService.CardType.Record) {
+        selectedRecord = DataService.SelectedTable['CardData'];
+      } else {
+        selectedRecord = DataService.allCards.getValue()[DataService.CardType.Table][data];
+      }
       // this.SelectedDatabase = selectedRecord.Database;
       this.SelectedSchema = selectedRecord.Schema;
       this.SelectedTable = selectedRecord.Table;
@@ -294,11 +302,14 @@ private static that: DataService;
       }
 
   public PreviewCard(CardType: number, data: {}) {
+    if (CardType === DataService.CardType.Table) {
+      DataService.SelectedTable = { CardType: CardType, CardData: data};
+    }
     DataService.SelectedCard.next({ CardType: CardType, CardData: data});
-    this.PostObjectRequest(DataService.RequestType.GetDescription, null);
+    this.PostObjectRequest(DataService.RequestType.GetDescription, 'Description', null);
   }
 
-  public PostObjectRequest(RequestType: number, Data: {}) {
+  public PostObjectRequest(RequestType: number, SubObject: string, Data: {}) {
     const selectedCard = DataService.SelectedCard.getValue();
     this.getConnections().forEach(connection => {
       const params = {
@@ -310,15 +321,16 @@ private static that: DataService;
         object: selectedCard.CardData['Table'],
         field: null,
         value: null,
-        description: Data
+        object_name: SubObject
       };
 
       switch (RequestType) {
         case DataService.RequestType.GetDescription:
-        params.action = 'get_description';
+        params.action = 'get_object';
         break;
         case DataService.RequestType.SetDescription:
-        params.action = 'set_description';
+        params.action = 'set_object';
+        params.value = Data;
         break;
       }
 
@@ -337,9 +349,9 @@ private static that: DataService;
       // this.http.post('http://10.101.4.98:86/mm/api/index.php', params).subscribe(
         data => {
           if (data != null) {
-            if (data.hasOwnProperty('description')) {
-              DataService.oldCardPreviewDescription = data['description'];
-              DataService.cardPreviewDescription.next(data['description']);
+            if (data.hasOwnProperty('Description')) {
+              DataService.oldCardPreviewDescription = data['Description'];
+              DataService.cardPreviewDescription.next(data['Description']);
             } else {
               this.updateCards(data);
             }
