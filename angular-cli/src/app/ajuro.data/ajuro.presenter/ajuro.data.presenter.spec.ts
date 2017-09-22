@@ -36,31 +36,35 @@ describe('DataAccessTests', function() {
         component = fixture.componentInstance;
     });
 
-    beforeEach(function() {
-
-    });
 
     beforeEach(inject([DataService], function(_DataService_, $httpBackend) {
       dataService = _DataService_;
       httpBackend = $httpBackend;
     }));
 
+    beforeEach(function() {
+      this.dataService = new DataService(null);
+    });
+
+    // 
     it('UNIT TEST FOR FUNCTION: (method) DataService.setCards(cardType: number, data: any, source: number): void', function() {
-      expect(component.dataService.setCards).toBeDefined();
-      expect(component.dataService.setCards).toEqual(jasmine.any(Function));
+      // Identifier exists
+      expect(this.dataService.setCards).toBeDefined();
+      // It is a function
+      expect(this.dataService.setCards).toEqual(jasmine.any(Function));
     });
 
     it('Adding empty arrays should be just fine', function() {
-
       // Prepare the empty cards holder
       const existentCards = DataService.allCards.getValue();
+      // It has at least as much entries as we need
+      expect(existentCards.length > DataService.CardType.Table +9);
+      // Make sure the container is empty
       existentCards[DataService.CardType.Table] = [];
+      // Assign the empty container
       DataService.allCards.next(existentCards);
-
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 0);
-      // TEST
-      component.dataService.setCards(DataService.CardType.Table, [], 0);
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 0);
+      // Check all is as expected
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(0);
     });
 
     it('Adding one array with unique values should be just fine', function() {
@@ -70,10 +74,11 @@ describe('DataAccessTests', function() {
       existentCards[DataService.CardType.Table] = [];
       DataService.allCards.next(existentCards);
 
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 0);
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(0);
       // TEST
-      component.dataService.setCards(DataService.CardType.Table, [{'Val1': 1}, {'Val2': 2}], 0);
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 2);
+      const Data = [{'Val1': 1}, {'Val2': 2}];
+      component.dataService.setCards(DataService.CardType.Table, Data, 0);
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(Data.length);
     });
 
     it('Adding two arrays with some common elements should result in a union', function() {
@@ -83,13 +88,15 @@ describe('DataAccessTests', function() {
       existentCards[DataService.CardType.Table] = [];
       DataService.allCards.next(existentCards);
 
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 0);
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(0);
       // TEST
-      component.dataService.setCards(DataService.CardType.Table, [{'Val1': 1}, {'Val2': 2}], 0);
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 2);
+      const DataA = [{'Val1': 1}, {'Val2': 2}];
+      const DataB = [{'Val1': 3}, {'Val2': 2}];
+      component.dataService.setCards(DataService.CardType.Table, DataA, 0);
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(DataA.length);
 
-      component.dataService.setCards(DataService.CardType.Table, [{'Val1': 3}, {'Val2': 2}], 0);
-      expect(DataService.allCards.getValue()[DataService.CardType.Table].length === 4);
+      component.dataService.setCards(DataService.CardType.Table, DataB, 0);
+      expect(DataService.allCards.getValue()[DataService.CardType.Table].length).toEqual(DataA.length + DataB.length - 1);
     });
   });
 });
