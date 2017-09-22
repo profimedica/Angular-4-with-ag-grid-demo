@@ -19,7 +19,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.json"
   },
   "homepage": "https://aju.ro",
   "angular-cli": {},
@@ -51,6 +52,7 @@
     "enhanced-resolve": "^3.1.0",
     "firebase": "^4.3.0",
     "gulp": "^3.9.1",
+    "gulp-rimraf": "^0.2.1",
     "hammerjs": "^2.0.8",
     "jasmine-core": "2.6.4",
     "jasmine-spec-reporter": "3.3.0",
@@ -71,6 +73,7 @@
     "@angular/cli": "^1.3.1",
     "@angular/compiler-cli": "^4.3.5",
     "@angular/language-service": "4.2.x",
+    "@compodoc/compodoc": "^1.0.1",
     "@types/jasmine": "^2.5.54",
     "@types/node": "^8.0.24",
     "canonical-path": "0.0.2",

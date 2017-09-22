@@ -130,7 +130,11 @@ private static that: DataService;
     return existentData; // Passed by reference
   }
 
-
+  // ajuro.data.service.ts
+  /**
+   * @name setCards
+   * @description Setter for a given cards type
+   */
   // Setter for a given cards type
   public setCards(cardType: number, data: any, source: number) {
     DataService.LastType.next(cardType);
