@@ -24,8 +24,8 @@ module.exports = function (config) {
           'build/angular-mocks.js',
             {pattern: './src/test.ts', watched: false},
             // ag-grid libraries
-            {pattern: 'node_modules/ag-grid/**/*.js', included: false, watched: false},
-            {pattern: 'node_modules/ag-grid-angular/**/*.js', included: false, watched: false},
+            {pattern: 'node_modules/ajuro-ui/**/*.js', included: false, watched: false},
+            {pattern: 'node_modules/ajuro-ui-angular/**/*.js', included: false, watched: false},
 
         ],
         // list of files to exclude

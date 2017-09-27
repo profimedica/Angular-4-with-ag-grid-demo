@@ -18,7 +18,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PipesModule } from './ajuro.pipes/pipes.module';
 
 // import "ag-grid-enterprise"; // ****
-import {AgGridModule} from 'ag-grid-angular/main';
+// import {AgGridModule} from 'ag-grid-angular/main';
+import {AgGridModule} from 'ajuro-ui-angular/main';
 import {AppComponent} from './app.component';
 import {GridAreaComponent} from './ajuro.grid/ajuro.grid.area/ajuro.grid.area.component';
 import {MyGridApplicationComponent} from './my-app/my-app.component';

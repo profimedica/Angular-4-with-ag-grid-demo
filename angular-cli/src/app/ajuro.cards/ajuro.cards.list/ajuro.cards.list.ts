@@ -3,6 +3,7 @@ import { DataPresenterComponent } from './../../ajuro.data/ajuro.presenter/ajuro
 import { Observable } from 'rxjs/observable';
 import { CardModel } from './../ajuro.cards.model';
 import { OnInit, ViewChild } from '@angular/core';
+// import { OnInit, ViewChild } from '@profimedica/ajuro-ui';
 // import { CardsService } from '../ajuro.cards.service';
 import { Component } from '@angular/core';
 

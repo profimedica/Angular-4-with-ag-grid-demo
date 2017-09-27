@@ -7,7 +7,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RedComponentComponent } from '../../red-component/red-component.component';
 import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
          MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
-import { GridOptions } from 'ag-grid/main';
+// import { GridOptions } from 'ag-grid/main';
+import { GridOptions } from 'ajuro-ui/main';
 
 @Component({
     selector: 'app-grid-area',

@@ -1,4 +1,4 @@
-import { ValueCache } from 'ag-grid/dist/lib/valueService/valueCache';
+import { ValueCache } from 'ajuro-ui/dist/lib/valueService/valueCache';
 // import { CardsService } from '../ajuro.cards/ajuro.cards.service';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';

@@ -15,7 +15,7 @@ import {async, TestBed} from '@angular/core/testing';
 
 import {AppComponent} from './app.component';
 import {RedComponentComponent} from './red-component/red-component.component';
-import {AgGridModule} from 'ag-grid-angular';
+import {AgGridModule} from 'ajuro-ui-angular';
 import {MyGridApplicationComponent} from './my-app/my-app.component';
 import { CardsListComponent } from './ajuro.cards/ajuro.cards.list/ajuro.cards.list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
