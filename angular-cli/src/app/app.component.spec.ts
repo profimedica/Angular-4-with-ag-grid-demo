@@ -22,8 +22,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MdButtonModule, MdCheckboxModule, MdInputModule,
   MdNativeDateModule, MdSlideToggleModule,
-  MdTooltipModule, MdSidenavModule, MdTableModule,
-  MaterialModule } from '@angular/material';
+  MdTooltipModule, MdSidenavModule, MdTableModule } from '@angular/material';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {

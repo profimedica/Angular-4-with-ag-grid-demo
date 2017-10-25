@@ -7,11 +7,6 @@ import { DataPresenterComponent } from './ajuro.data/ajuro.presenter/ajuro.data.
 import { GridFilterComponent } from './ajuro.grid/ajuro.grid.filter/ajuro.grid.filter.component';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule, MdInputModule,
-    MdNativeDateModule, MdSlideToggleModule,
-    MdTooltipModule, MdSidenavModule, MdTableModule,
-    MaterialModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -24,11 +19,17 @@ import {AppComponent} from './app.component';
 import {GridAreaComponent} from './ajuro.grid/ajuro.grid.area/ajuro.grid.area.component';
 import {MyGridApplicationComponent} from './my-app/my-app.component';
 import {RedComponentComponent} from './red-component/red-component.component';
+import 'hammerjs';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule, MdMenuModule, MdToolbarModule, MdIconModule,
+    MdNativeDateModule, MdSlideToggleModule,
+    MdTooltipModule, MdSidenavModule, MdTableModule,
+    MATERIAL_SANITY_CHECKS } from '@angular/material';
 
 // Modules
 // import { AjuroCardsModule } from './ajuro.cards/ajuro.cards.module';
 import { AjuroInterceptor } from './my.interceptor';
-
 
 @NgModule({
     declarations: [
@@ -46,9 +47,18 @@ import { AjuroInterceptor } from './my.interceptor';
     imports: [
         HttpClientModule,
         BrowserAnimationsModule,
-        MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
-        MdTooltipModule, MdSidenavModule, MdTableModule,
-        MaterialModule,
+        MdButtonModule, 
+        MdCheckboxModule, 
+        MdInputModule, 
+        MdNativeDateModule, 
+        MdCardModule, 
+        MdMenuModule, 
+        MdToolbarModule, 
+        MdIconModule,
+        MdSlideToggleModule,
+        MdTooltipModule, 
+        MdSidenavModule, 
+        MdTableModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
@@ -58,11 +68,18 @@ import { AjuroInterceptor } from './my.interceptor';
             [RedComponentComponent]
         )
     ],
-    providers: [{
-      provide: HTTP_INTERCEPTORS,
-      useClass: AjuroInterceptor,
-      multi: true
-    }, DataService ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AjuroInterceptor,
+            multi: true
+        }, 
+        DataService,
+        {
+            provide: MATERIAL_SANITY_CHECKS,
+            useValue: false
+            } 
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

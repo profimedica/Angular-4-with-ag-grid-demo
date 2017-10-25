@@ -1012,7 +1012,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="316" class="link-to-prism">src/app/ajuro.data/ajuro.data.service.ts:316</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="317" class="link-to-prism">src/app/ajuro.data/ajuro.data.service.ts:317</a></div>
                                         </td>
                                     </tr>
             
@@ -1092,7 +1092,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="374" class="link-to-prism">src/app/ajuro.data/ajuro.data.service.ts:374</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="377" class="link-to-prism">src/app/ajuro.data/ajuro.data.service.ts:377</a></div>
                                         </td>
                                     </tr>
             
@@ -2104,7 +2104,7 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { ValueCache } from &#x27;ag-grid/dist/lib/valueService/valueCache&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { ValueCache } from &#x27;ajuro-ui/dist/lib/valueService/valueCache&#x27;;
 // import { CardsService } from &#x27;../ajuro.cards/ajuro.cards.service&#x27;;
 import { BehaviorSubject } from &#x27;rxjs/Rx&#x27;;
 import { Injectable } from &#x27;@angular/core&#x27;;
@@ -2132,8 +2132,8 @@ private static that: DataService;
     Tag: 0,
     Data: 1,
     Filters: 2,
-    GetDescription: 3,
-    SetDescription: 4
+    GetSubObject: 3,
+    SetSubObject: 4
   };
 
   // Last used card
@@ -2182,7 +2182,7 @@ private static that: DataService;
 
   DataService.cardPreviewDescription.subscribe((newDescription) &#x3D;&gt; {
     if (DataService.oldCardPreviewDescription !&#x3D;&#x3D; newDescription) {
-      this.PostObjectRequest(DataService.RequestType.SetDescription, &#x27;Description&#x27;, newDescription);
+      this.PostObjectRequest(DataService.RequestType.SetSubObject, &#x27;Description&#x27;, newDescription);
     }
   });
 
@@ -2191,7 +2191,7 @@ private static that: DataService;
         DataService.gridFilters.subscribe((filter) &#x3D;&gt; {
           if (filter !&#x3D; null &amp;&amp; filter.length &gt; 0) {
             console.log(JSON.stringify(filter));
-            this.PostObjectRequest(DataService.RequestType.SetDescription, &#x27;Filters&#x27;, filter);
+            this.PostObjectRequest(DataService.RequestType.SetSubObject, &#x27;Filters&#x27;, filter);
             this.PostRequest(DataService.CardType.Record, null, DataService.RequestType.Data);
           }
         });
@@ -2255,7 +2255,7 @@ private static that: DataService;
         cardType !&#x3D;&#x3D; DataService.CardType.Procedure
       ) {
           allCards[0] &#x3D; this.injectRecords(cardType, data, source, allCards[0]);
-          // this.PostObjectRequest(DataService.RequestType.GetDescription, &#x27;Filters&#x27;, null);
+          // this.PostObjectRequest(DataService.RequestType.GetSubObject, &#x27;Filters&#x27;, null);
         }
 
     if (data.length &gt; 0) {
@@ -2416,7 +2416,8 @@ private static that: DataService;
       DataService.SelectedTable &#x3D; { CardType: CardType, CardData: data};
     }
     DataService.SelectedCard.next({ CardType: CardType, CardData: data});
-    this.PostObjectRequest(DataService.RequestType.GetDescription, &#x27;Description&#x27;, null);
+    this.PostObjectRequest(DataService.RequestType.GetSubObject, &#x27;Description&#x27;, null);
+    this.PostObjectRequest(DataService.RequestType.GetSubObject, &#x27;Filters&#x27;, null);
   }
 
   public PostObjectRequest(RequestType: number, SubObject: string, Data: {}) {
@@ -2435,10 +2436,10 @@ private static that: DataService;
       };
 
       switch (RequestType) {
-        case DataService.RequestType.GetDescription:
+        case DataService.RequestType.GetSubObject:
         params.action &#x3D; &#x27;get_object&#x27;;
         break;
-        case DataService.RequestType.SetDescription:
+        case DataService.RequestType.SetSubObject:
         params.action &#x3D; &#x27;set_object&#x27;;
         params.value &#x3D; Data;
         break;
@@ -2455,13 +2456,15 @@ private static that: DataService;
 
       const headers &#x3D; new Headers({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
       const options &#x3D; new RequestOptions({ headers: headers, params: params });
-      this.http.post(&#x27;http://localhost:86/my/api/index.php&#x27;, params).subscribe(
-      // this.http.post(&#x27;http://10.101.4.98:86/mm/api/index.php&#x27;, params).subscribe(
+      //this.http.post(&#x27;http://localhost:86/my/api/index.php&#x27;, params).subscribe(
+      this.http.post(&#x27;http://10.101.4.98:86/mm/api/index.php&#x27;, params).subscribe(
         data &#x3D;&gt; {
           if (data !&#x3D; null) {
             if (data.hasOwnProperty(&#x27;Description&#x27;)) {
               DataService.oldCardPreviewDescription &#x3D; data[&#x27;Description&#x27;];
               DataService.cardPreviewDescription.next(data[&#x27;Description&#x27;]);
+            } else if (data.hasOwnProperty(&#x27;Filters&#x27;)) {
+              DataService.gridFilters.next(data[&#x27;Filters&#x27;]);
             } else {
               this.updateCards(data);
             }
@@ -2637,8 +2640,8 @@ private static that: DataService;
 
           const headers &#x3D; new Headers({ &#x27;Content-Type&#x27;: &#x27;application/json&#x27; });
           const options &#x3D; new RequestOptions({ headers: headers, params: params });
-          this.http.post(&#x27;http://localhost:86/my/api/index.php&#x27;, params).subscribe(
-          // this.http.post(&#x27;http://10.101.4.98:86/mm/api/index.php&#x27;, params).subscribe(
+          //this.http.post(&#x27;http://localhost:86/my/api/index.php&#x27;, params).subscribe(
+          this.http.post(&#x27;http://10.101.4.98:86/mm/api/index.php&#x27;, params).subscribe(
             data &#x3D;&gt; {
               if (data !&#x3D; null) {
                 if (data.hasOwnProperty(&#x27;description&#x27;)) {

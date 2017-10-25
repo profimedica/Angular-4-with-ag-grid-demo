@@ -1,9 +1,8 @@
-<h1>Angular 4</h1>
+<h1></h1>
 <md-tab-group>
     <md-tab label="DATA">
       <app-cards-filter></app-cards-filter>
       <div class='cards_panel'>
-        <!--button type="button" md-button (click)="GoBack()">Back</button-->
         <app-cards-sources></app-cards-sources>
         <app-cards-list></app-cards-list>
         <app-data-provider></app-data-provider>
@@ -27,7 +26,6 @@
                             [formControlName]="fielde"
                             (mouseenter)="SelectTable(itemz)"
                             >
-                            <!--[value]="itemz+'_'+fielde"-->
                           </div>
                         </div>
                     </fieldset>
@@ -36,6 +34,13 @@
           <pre>{{TableCards.value | json}}</pre>
         </form>
       </span>
+    </md-tab>
+    <md-tab label="Material">
+      <div id="content">
+        <md-card>  
+            
+        </md-card>
+      </div>
     </md-tab>
     <md-tab label="HTTP">
     <div id="content">
@@ -55,7 +60,6 @@
                               class="form-control"
                               [formControlName]="fielde"
                               >
-                              <!--[value]="itemz+'_'+fielde"-->
                             </div>
                           </div>
                       </fieldset>
@@ -68,3 +72,40 @@
       </div>
     </md-tab>
 </md-tab-group>
+
+<form class="example-form">
+    <md-form-field class="example-full-width">
+      <input mdInput placeholder="Company (disabled)" disabled value="Google">
+    </md-form-field>
+  
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><md-form-field class="example-full-width">
+        <input mdInput placeholder="First name"> 
+      </md-form-field></td>
+      <td><md-form-field class="example-full-width">
+        <input mdInput placeholder="Long Last Name That Will Be Truncated">
+      </md-form-field></td>
+    </tr></table>
+  
+    <p>
+      <md-form-field class="example-full-width">
+        <textarea mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+      </md-form-field>
+      <md-form-field class="example-full-width">
+        <textarea mdInput placeholder="Address 2"></textarea>
+      </md-form-field>
+    </p>
+  
+    <table class="example-full-width" cellspacing="0"><tr>
+      <td><md-form-field class="example-full-width">
+        <input mdInput placeholder="City">
+      </md-form-field></td>
+      <td><md-form-field class="example-full-width">
+        <input mdInput placeholder="State">
+      </md-form-field></td>
+      <td><md-form-field class="example-full-width">
+        <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+        <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
+      </md-form-field></td>
+    </tr></table>
+</form>

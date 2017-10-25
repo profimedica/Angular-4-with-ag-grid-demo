@@ -3,19 +3,19 @@
 }
 
 .container {
-height: 300px;
-border: 1px solid rgba(0, 0, 0, 0.5);
+  /*height: 300px;*/
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .sidenav-content {
-display: flex;
-height: 100%;
-align-items: center;
-justify-content: center;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidenav {
-padding: 25px;
+  padding: 25px;
 }
 
 .ajuro_circle {
@@ -48,4 +48,14 @@ padding: 25px;
   background-color: white;
   overflow: scroll;
   overflow-x: hidden;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }

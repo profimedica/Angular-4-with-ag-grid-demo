@@ -12,15 +12,23 @@ import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/for
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RedComponentComponent } from '../red-component/red-component.component';
-import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
-         MdTooltipModule, MdSidenavModule, MdTableModule, MaterialModule } from '@angular/material';
 import { CardsPreviewComponent } from '../ajuro.cards/ajuro.cards.preview/ajuro.cards.preview';
 import { CardsListComponent } from '../ajuro.cards/ajuro.cards.list/ajuro.cards.list';
+
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MdButtonModule, MdCheckboxModule, MdInputModule, MdNativeDateModule, MdSlideToggleModule,
+         MdTooltipModule, MdSidenavModule, MdTableModule } from '@angular/material';
 
 @Component({
     selector: 'app-my-grid-application',
     templateUrl: './my-app.html',
-    styleUrls: ['./my-app.css']
+    styleUrls: [
+      '../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css', 
+      './my-app.css'
+    ]
 })
 export class MyGridApplicationComponent implements OnInit {
   // SELECT CONCAT('INSERT INTO #tbl EXEC sp_helptext ''', SCHEMA_NAME(o.[schema_id]), '.', o.[name], '''; INSERT INTO #tbl SELECT ''GO----', SCHEMA_NAME(o.[schema_id]), '.', o.[name], ';'';') FROM sys.all_objects o
@@ -37,6 +45,9 @@ export class MyGridApplicationComponent implements OnInit {
 
     static that;
     static GenericPurposeIndex = 0;
+
+    public MyDate:Date;
+
     RequestsHistoryCards: FormGroup;
     TableCards: FormGroup;
 
